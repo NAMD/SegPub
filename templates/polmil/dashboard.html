@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+
+{% block extra_head %}
+    {% load leaflet_tags %}
+    {% leaflet_js %}
+    {% leaflet_css %}
+    {% leaflet_js plugins="ALL" %}
+  	<!-- MarkerCluster https://github.com/danzel/Leaflet.markercluster -->
+	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.css" %}" />
+	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.Default.css" %}" />
+	<!--[if lte IE 8]> <link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.Default.ie.css" %}" /> <![endif]-->
+	<script src="{% static "lib/MarkerCluster/js/leaflet.markercluster-src.js" %}"></script>
+	<!-- GeoCSV: https://github.com/joker-x/Leaflet.geoCSV -->
+	<script src="{% static "lib/GeoCsv/js/leaflet.geocsv-src.js" %}"></script>
+	<!-- jQuery 1.8.3: http://jquery.com/ -->
+	<script src="{% static "lib/jquery/jquery.js" %}"></script>
+{% endblock %}
+
+{% block title %}Chamados 190{% endblock %}
+
+{% block content %}
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h1 class="page-header">Chamados 190</h1>
+                <!--
+                <div id="botao">
+		            <button id="localizame" class="boton">Ocorrências ao redor</button>
+		        </div>
+		        <div id="mapa"></div>
+                <div id="carregando">Carregando...</div> -->
+            </div>
+            {% leaflet_map "mapa" callback="main_map_init" %}
+            {#% leaflet_map "mapa" %#}
+        </div>
+    </div>
+
+    <script>
+    //;$(function() {
+    var mapa = L.map('mapa', {attributionControl:false}).setView([-22.92,-43.22], 10);
+    L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 18
+    }).addTo(mapa);
+
+    var ocorrencias = L.geoCsv(null, {
+	onEachFeature: function (feature, layer) {
+		var popup = '';
+		for (var indice in feature.properties) {
+			var title = ocorrencias.getPropertyTitle(indice);
+			popup += '<b>'+title+'</b><br />'+feature.properties[indice]+'<br />';
+		}
+		layer.bindPopup(popup);
+	},
+	pointToLayer: function (feature, latlng) {
+		return L.marker(latlng, {
+			icon:L.icon({
+				iconUrl: '{% static 'images/chamado.png' %}',
+				shadowUrl: '{% static 'images/marker-shadow.png' %}',
+				iconSize: [28,35],
+				shadowSize:   [41, 41],
+				shadowAnchor: [13, 20]
+			})
+		});
+	},
+	firstLineTitles: true
+    });
+
+    $.ajax ({
+	    type:'GET',
+	    dataType:'text',
+	    url:'{% static 'data/segpub.csv' %}',
+    error: function() {
+        alert('Não foi possível carregar os dados');
+    },
+	success: function(csv) {
+        var cluster = new L.MarkerClusterGroup();
+		ocorrencias.addData(csv);
+		cluster.addLayer(ocorrencias);
+		mapa.addLayer(cluster);
+		mapa.fitBounds(cluster.getBounds());
+	},
+    complete: function() {
+        $('#carregando').delay(500).fadeOut('slow');
+    }
+    });
+
+    $('#localizame').click(function(e) {
+	    mapa.locate();
+	$('#localizame').text('Localizando...');
+	    mapa.on('locationfound', function(e) {
+		mapa.setView(e.latlng, 15);
+		$('#localizame').text('Ocorrências ao redor');
+	});
+    });
+    //});
+    </script>
+{% endblock %}

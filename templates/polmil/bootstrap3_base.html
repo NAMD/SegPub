@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+{% load bootstrap3 %}
+<html>
+    <head>
+        {% bootstrap_javascript jquery=True %}
+        <title>{% block bootstrap3_title %}{% endblock %}</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        {% bootstrap_css %}
+        <!-- Custom styles-->
+        <link href="{% static "lib/css/custom.css" %}" rel="stylesheet">
+        <!-- Custom styles for Dashboard -->
+        <link href="{% static "lib/css/dashboard.css" %}" rel="stylesheet">
+        <!-- Custom styles for Navbar fix top-->
+        <link href="{% static "lib/css/navbar-static-top.css" %}" rel="stylesheet">
+        <!-- Custom styles for Sticker footer-->
+        <link href="{% static "lib/css/sticky-footer.css" %}" rel="stylesheet">
+        <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+        <script src="{% static  "lib/js/ie10-viewport-bug-workaround.js" %}"></script>
+        {% block extra_head %}{% endblock %}
+    </head>
+<body>
+    {% block bootstrap3_content %}{% endblock %}
+    <div class="footer">
+        <div class="container">
+            <img  src="{% static 'images/emap_logo.png' %}" height="50px" align="middle">
+            <img  src="{% static 'images/igarape_logo.png' %}" height="50px" align="middle">
+            <p class="text-muted">Place sticky footer content here.</p>
+        </div>
+    </div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Mapa da Segurança Pública do Rio de Janeiro</title>
+
+    <!-- Custom styles-->
+    <link href="{% static "lib/css/custom.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for Dashboard -->
+    <link href="{% static "lib/css/dashboard.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for Navbar fix top-->
+    <link href="{% static "lib/css/navbar-static-top.css" %}" rel="stylesheet">
+
+    <!-- Custom styles for Sticker footer-->
+    <link href="{% static "lib/css/sticky-footer.css" %}" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="{% static  "lib/js/ie10-viewport-bug-workaround.js" %}"></script>
+
+    <!-- Leaflet 0.73:
+    <link rel="stylesheet" href="{% static "lib/leaflet/css/leaflet.css" %}"/>
+	<script src="{% static "lib/leaflet/js/leaflet.js" %}"></script> -->
+    {% leaflet_js %}
+    {% leaflet_css %}
+
+	<!-- MarkerCluster https://github.com/danzel/Leaflet.markercluster -->
+	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.css" %}" />
+	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.Default.css" %}" />
+	<!--[if lte IE 8]> <link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.Default.ie.css" %}" /> <![endif]-->
+	<script src="{% static "lib/MarkerCluster/js/leaflet.markercluster-src.js" %}"></script>
+
+	<!-- GeoCSV: https://github.com/joker-x/Leaflet.geoCSV -->
+	<script src="{% static "lib/GeoCsv/js/leaflet.geocsv-src.js" %}"></script>
+
+	<!-- jQuery 1.8.3: http://jquery.com/ -->
+	<script src="{% static "lib/jquery/jquery.js" %}"></script>
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <!-- <button type="botao" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">Teste1</span>
+                    <span class="icon-bar">Teste2</span>
+                    <span class="icon-bar">Teste3</span>
+                </button> -->
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="home">Dashboard</a></li>
+                    <li><a href="#">Configurações</a></li>
+                    <li><a href="#">Ajuda</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="#">Chamados 190</a></li>
+                    <li><a href="#">Ocorrências</a></li>
+                </ul>
+            </div>
+
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <h1 class="page-header">Chamados 190</h1>
+            <!--
+            <div id="botao">
+			    <button id="localizame" class="boton">Ocorrências ao redor</button>
+		    </div>
+		    <div id="mapa"></div>
+            <div id="carregando">Carregando...</div> -->
+            </div>
+            {% leaflet_map "mapa" %}
+        </div>
+    </div>
+
+<script>
+    //;$(function() {
+    var mapa = L.map('mapa', {attributionControl:false}).setView([-22.92,-43.22], 10);
+    L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+	maxZoom: 18
+    }).addTo(mapa);
+
+    var ocorrencias = L.geoCsv(null, {
+	onEachFeature: function (feature, layer) {
+		var popup = '';
+		for (var indice in feature.properties) {
+			var title = ocorrencias.getPropertyTitle(indice);
+			popup += '<b>'+title+'</b><br />'+feature.properties[indice]+'<br />';
+		}
+		layer.bindPopup(popup);
+	},
+	pointToLayer: function (feature, latlng) {
+		return L.marker(latlng, {
+			icon:L.icon({
+				iconUrl: '{% static 'images/chamado.png' %}',
+				shadowUrl: '{% static 'images/marker-shadow.png' %}',
+				iconSize: [28,35],
+				shadowSize:   [41, 41],
+				shadowAnchor: [13, 20]
+			})
+		});
+	},
+	firstLineTitles: true
+    });
+
+    $.ajax ({
+	    type:'GET',
+	    dataType:'text',
+	    url:'{% static 'data/segpub.csv' %}',
+    error: function() {
+        alert('Não foi possível carregar os dados');
+    },
+	success: function(csv) {
+        var cluster = new L.MarkerClusterGroup();
+		ocorrencias.addData(csv);
+		cluster.addLayer(ocorrencias);
+		mapa.addLayer(cluster);
+		mapa.fitBounds(cluster.getBounds());
+	},
+    complete: function() {
+        $('#carregando').delay(500).fadeOut('slow');
+    }
+    });
+
+    $('#localizame').click(function(e) {
+	    mapa.locate();
+	$('#localizame').text('Localizando...');
+	    mapa.on('locationfound', function(e) {
+		mapa.setView(e.latlng, 15);
+		$('#localizame').text('Ocorrências ao redor');
+	});
+    });
+    //});
+</script>
+    <div class="footer">
+        <div class="container">
+            <img  src="{% static 'images/emap_logo.png' %}" height="50px" align="middle">
+            <img  src="{% static 'images/igarape_logo.png' %}" height="50px" align="middle">
+            <p class="text-muted">Place sticky footer content here.</p>
+        </div>
+    </div>
+</body>
+</html>

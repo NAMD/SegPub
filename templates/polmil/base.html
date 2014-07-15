@@ -1,0 +1,54 @@
+{% extends 'bootstrap3_base.html' %}
+
+{# Load the tag library #}
+{% load bootstrap3 %}
+{# Load libraries css, js and images #}
+{% load static %}
+
+{% block bootstrap3_content %}
+
+    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+            <!-- <button type="botao" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">Teste1</span>
+                    <span class="icon-bar">Teste2</span>
+                    <span class="icon-bar">Teste3</span>
+                </button> -->
+                <a class="navbar-brand" href="#">Project name</a>
+            </div>
+
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="home">Dashboard</a></li>
+                    <li><a href="#">Configurações</a></li>
+                    <li><a href="#">Ajuda</a></li>
+                    <li><a href="#">Sobre</a></li>
+                    <li><a href="#">Login</a></li>
+                </ul>
+                <form class="navbar-form navbar-right">
+                    <input type="text" class="form-control" placeholder="Search...">
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+                <ul class="nav nav-sidebar">
+                    <li class="active"><a href="#">Chamados 190</a></li>
+                    <li><a href="#">Ocorrências</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="footer">
+        <div class="container">
+            <img  src="{% static 'images/emap_logo.png' %}" height="50px" align="middle">
+            <img  src="{% static 'images/igarape_logo.png' %}" height="50px" align="middle">
+            <p class="text-muted">Place sticky footer content here.</p>
+        </div>
+    </div>
+{% endblock %}
