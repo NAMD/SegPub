@@ -28,20 +28,21 @@
     <!-- Custom styles for Dashboard -->
     <link href="{% static "lib/css/dashboard.css" %}" rel="stylesheet">
 
-    <!-- Custom styles for Navbar fix top-->
-    <link href="{% static "lib/css/navbar-static-top.css" %}" rel="stylesheet">
+    <!-- Custom styles for Navbar fix top
+    <link href="{% static "lib/css/navbar-static-top.css" %}" rel="stylesheet"> -->
 
-    <!-- Custom styles for Sticker footer-->
-    <link href="{% static "lib/css/sticky-footer.css" %}" rel="stylesheet">
+    <!-- Custom styles for Sticker footer
+    <link href="{% static "lib/css/sticky-footer.css" %}" rel="stylesheet"> -->
+
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="{% static  "lib/js/ie10-viewport-bug-workaround.js" %}"></script>
 
     <!-- Leaflet 0.73: -->
     <link rel="stylesheet" href="{% static "lib/leaflet/css/leaflet.css" %}"/>
-	<script src="{% static "lib/leaflet/js/leaflet.js" %}"></script> -->
+	<script src="{% static "lib/leaflet/js/leaflet.js" %}"></script>
     {#% leaflet_js %#}
     {#% leaflet_css %#}
-	{#% leaflet_js plugins="ALL" %#}-->
+	{#% leaflet_js plugins="ALL" %#}
 
 	<!-- MarkerCluster https://github.com/danzel/Leaflet.markercluster -->
 	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.css" %}" />
@@ -50,6 +51,7 @@
 	<script src="{% static "lib/MarkerCluster/js/leaflet.markercluster-src.js" %}"></script>
 
 	<!-- GeoCSV: https://github.com/joker-x/Leaflet.geoCSV -->
+    <script src="{% static "lib/GeoCsv/js/leaflet.geocsv.js" %}"></script>
 	<script src="{% static "lib/GeoCsv/js/leaflet.geocsv-src.js" %}"></script>
 
 	<!-- jQuery 1.8.3: http://jquery.com/ -->
@@ -99,9 +101,9 @@
 			    <button id="localizame" class="boton">Ocorrências ao redor</button>
 		    </div>
 		    <div id="mapa"></div>
-            <div id="carregando">Carregando...</div> -->
+            <div id="carregando">Carregando...</div>
             {#% leaflet_map "mapa" %#}
-            {#% leaflet_map "mapa" callback="main_map_init" %#} -->
+            {#% leaflet_map "mapa" callback="main_map_init" %#}
             </div>
         </div>
     </div>
@@ -167,8 +169,8 @@
 </script>
     <div class="footer">
         <div class="container">
-            <img  src="{% static 'images/emap_logo.png' %}" height="50px" align="middle">
-            <img  src="{% static 'images/igarape_logo.png' %}" height="50px" align="middle">
+            <img  src="{% static 'images/emap_logo.png' %}" height="35px" align="middle">
+            <img  src="{% static 'images/igarape_logo.png' %}" height="35px" align="middle">
         </div>
     </div>
 </body>
