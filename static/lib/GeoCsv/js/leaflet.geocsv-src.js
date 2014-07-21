@@ -26,10 +26,10 @@ L.GeoCSV = L.GeoJSON.extend({
     titles: ['lat', 'lng', 'popup'],
 	latitudeTitle: 'lat',
 	longitudeTitle: 'lng',
-    fieldSeparator: ';',
+    fieldSeparator: '|',
     lineSeparator: '\n',
-    deleteDoubleQuotes: true,
-    firstLineTitles: false
+    deleteDoubleQuotes: false,
+    firstLineTitles: true
   },
 
   _propertiesNames: [],
