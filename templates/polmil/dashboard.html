@@ -1,44 +1,52 @@
-{% extends 'base.html' %}
+{% extends 'polmil/base.html' %}
 
 {% block extra_head %}
+    {%  load static %}
+
+    {# Load libraries leaflet #}
     {% load leaflet_tags %}
     {% leaflet_js %}
     {% leaflet_css %}
     {% leaflet_js plugins="ALL" %}
-  	<!-- MarkerCluster https://github.com/danzel/Leaflet.markercluster -->
+
+    <link rel="stylesheet" href="{% static "lib/css/sticky-footer.css" %}" />
+
+	<!-- MarkerCluster https://github.com/danzel/Leaflet.markercluster -->
 	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.css" %}" />
 	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.Default.css" %}" />
-	<!--[if lte IE 8]> <link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.Default.ie.css" %}" /> <![endif]-->
 	<script src="{% static "lib/MarkerCluster/js/leaflet.markercluster-src.js" %}"></script>
-	<!-- GeoCSV: https://github.com/joker-x/Leaflet.geoCSV -->
-	<script src="{% static "lib/GeoCsv/js/leaflet.geocsv-src.js" %}"></script>
-	<!-- jQuery 1.8.3: http://jquery.com/ -->
-	<script src="{% static "lib/jquery/jquery.js" %}"></script>
-{% endblock %}
 
-{% block title %}Chamados 190{% endblock %}
+	<!-- GeoCSV: https://github.com/joker-x/Leaflet.geoCSV -->
+    <script src="{% static "lib/GeoCsv/js/leaflet.geocsv.js" %}"></script>
+
+    <!-- Leaflet File Layer -->
+    <link rel="stylesheet" href="{% static "lib/FileLayer/css/font-awesome.min.css" %}" />
+    <script src="{% static "lib/FileLayer/js/leaflet.filelayer.js" %}"></script>
+    <script src="{% static "lib/FileLayer/js/togeojson/togeojson.js" %}"></script>
+
+    <!-- Leaflet OSMGeoCoder -->
+    <link rel="stylesheet" href="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css"/>
+    <script src="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>
+
+    <style>
+        .leaflet-container {  /* all maps */
+            width:  100%;
+            height: 780px;
+        }
+    </style>
+
+{% endblock %}
 
 {% block content %}
 
-    <div class="container-fluid">
-        <div class="row">
-            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h1 class="page-header">Chamados 190</h1>
-                <!--
-                <div id="botao">
-		            <button id="localizame" class="boton">Ocorrências ao redor</button>
-		        </div>
-		        <div id="mapa"></div>
-                <div id="carregando">Carregando...</div> -->
-            </div>
-            {% leaflet_map "mapa" callback="main_map_init" %}
-            {#% leaflet_map "mapa" %#}
-        </div>
-    </div>
+    {#% block title %#}{#% endblock %#}
 
-    <script>
+    {% leaflet_map "mapa" %}
+	{#% leaflet_map "mapa" callback="main_map_init" %#}
+
+    <script type="text/javascript">
     //;$(function() {
-    var mapa = L.map('mapa', {attributionControl:false}).setView([-22.92,-43.22], 10);
+    var mapa = L.map('mapa', {attributionControl:false}).setView([-22.70,-43.11], 10);
     L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 	maxZoom: 18
     }).addTo(mapa);
@@ -62,8 +70,8 @@
 				shadowAnchor: [13, 20]
 			})
 		});
-	},
-	firstLineTitles: true
+	}
+
     });
 
     $.ajax ({
@@ -84,15 +92,31 @@
         $('#carregando').delay(500).fadeOut('slow');
     }
     });
+//});
 
-    $('#localizame').click(function(e) {
-	    mapa.locate();
-	$('#localizame').text('Localizando...');
-	    mapa.on('locationfound', function(e) {
-		mapa.setView(e.latlng, 15);
-		$('#localizame').text('Ocorrências ao redor');
-	});
-    });
-    //});
-    </script>
+
+    var style = {color:'red',
+                 opacity: 1.0,
+                 fillOpacity: 1.0,
+                 weight: 2,
+                 clickable: false};
+        L.Control.FileLayerLoad.LABEL = '<i class="fa fa-folder-open"></i>';
+        L.Control.fileLayerLoad({
+            fitBounds: true,
+            layerOptions: {style: style,
+                           pointToLayer: function (data, latlng) {
+                              return L.circleMarker(latlng, {style: style});
+                           }}
+        }).addTo(mapa);
+
+    var osmGeocoder = new L.Control.OSMGeocoder({
+            collapsed: false,
+            position: 'bottomright',
+            text: 'Encontre'
+			});
+
+    mapa.addControl(osmGeocoder);
+
+</script>
+
 {% endblock %}

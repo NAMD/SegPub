@@ -10,9 +10,22 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+
 SETTINGS_DIR = os.path.dirname(__file__)
+
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
+
+TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
+STATIC_PATH = os.path.join(PROJECT_PATH, 'static')
+DATABASE_PATH = os.path.join(PROJECT_PATH, 'db.sqlite3')
+
+# Printing paths for sanity's sake
+print "Settings directory: ", SETTINGS_DIR
+print "Project root: ", PROJECT_PATH
+print "Templates: ", TEMPLATE_PATH
+print "Static: ", STATIC_PATH
+print "DB: ", DATABASE_PATH
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.6/howto/deployment/checklist/
@@ -22,11 +35,9 @@ SECRET_KEY = '^ic==-ksn(f@kd8(f9u_n&6s9o)u7j+kq$4$rjc7gz5x%0=ugy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
 TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
-
 
 # Application definition
 
@@ -82,17 +93,13 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.6/howto/static-files/
-
-STATIC_PATH = os.path.join(PROJECT_PATH, 'static')
-
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
     STATIC_PATH,
 )
 
-TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
-
+# Template files (CSS, JavaScript, Images)
 TEMPLATE_DIRS = (
     TEMPLATE_PATH,
 )
