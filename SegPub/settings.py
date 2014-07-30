@@ -11,20 +11,29 @@ https://docs.djangoproject.com/en/1.6/ref/settings/
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
 
+#from unipath import Path
+# Testing Unipath
+#SETTINGS_DIR = Path(__file__).parent
+#PROJECT_PATH = SETTINGS_DIR.child(SETTINGS_DIR, SETTINGS_DIR.parent)
+#PROJECT_PATH = PROJECT_PATH.absolute()
+#TEMPLATE_PATH = PROJECT_PATH.child(PROJECT_PATH, 'templates')
+#STATIC_PATH = PROJECT_PATH.child(PROJECT_PATH, 'static')
+#DATABASE_PATH = PROJECT_PATH.child(PROJECT_PATH, 'db.sqlite3')
+
 SETTINGS_DIR = os.path.dirname(__file__)
 
 PROJECT_PATH = os.path.join(SETTINGS_DIR, os.pardir)
 PROJECT_PATH = os.path.abspath(PROJECT_PATH)
 
-TEMPLATE_PATH = os.path.join(PROJECT_PATH, 'templates')
-STATIC_PATH = os.path.join(PROJECT_PATH, 'static')
-DATABASE_PATH = os.path.join(PROJECT_PATH, 'db.sqlite3')
+TEMPLATE_PATH = os.path.join(PROJECT_PATH, "templates")
+STATIC_PATH = os.path.join(PROJECT_PATH, "static")
+DATABASE_PATH = os.path.join(STATIC_PATH, "data/chamados190.db")
 
 # Printing paths for sanity's sake
-print "Settings directory: ", SETTINGS_DIR
-print "Project root: ", PROJECT_PATH
-print "Templates: ", TEMPLATE_PATH
-print "Static: ", STATIC_PATH
+print "SETTINGS_DIR: ", SETTINGS_DIR
+print "PROJECT_PATH: ", PROJECT_PATH
+print "TEMPLATE_PATH: ", TEMPLATE_PATH
+print "STATIC_PATH: ", STATIC_PATH
 print "DB: ", DATABASE_PATH
 
 # Quick-start development settings - unsuitable for production
@@ -73,7 +82,7 @@ WSGI_APPLICATION = 'SegPub.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(SETTINGS_DIR, 'db.sqlite3'),
+        'NAME': DATABASE_PATH,
     }
 }
 
