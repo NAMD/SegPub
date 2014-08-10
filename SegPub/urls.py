@@ -7,8 +7,6 @@ admin.autodiscover()
 urlpatterns = patterns('',
     # Examples:
     url(r'^$', 'polmil.views.index', name='home'),
-    # url(r'^blog/', include('blog.urls')),
-#    url(r'^dashboard/$', 'polmil.dashboard', name='dashboard'),
-#    url(r'^chamados/$', 'polmil.chamados'),
+    url(r'^polmil/', include('polmil.urls', namespace="dashboard")),
     url(r'^admin/', include(admin.site.urls)),
 )
