@@ -1,9 +1,16 @@
-from django.conf.urls import patterns, url
-import polmil
-from polmil import views
+from django.conf.urls import patterns, include, url
+from polmil.views import index
+
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
-#    url(r'^$', views.IndexView.as_view(), name='index'),
-    url(r'^dashboard/$', polmil.views.dashboard, name='dashboard'),
-    url(r'^chamados/$', polmil.views.chamados, name='chamados'),
-)
+                       url(r'^admin/', include(admin.site.urls)),
+
+                       (r'^$', index),
+
+                       (r'^polmil/', include('polmil.urls')),
+
+                       ('^accounts/', include('django.contrib.auth.urls')),
+
+                       )

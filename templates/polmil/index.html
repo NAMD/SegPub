@@ -20,8 +20,8 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Language" content="pt-br" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Python, Django, Alatazan, Katara, blog" />
-    <meta name="description" content="Este é o blog do Alatazan, um katarense aprendendo Django." />
+    <meta name="keywords" content="Python, Django" />
+    <meta name="description" content="Segurança Pública do Rio de Janeiro." />
 {% endblock meta %}
 
 {% block style %}
@@ -93,27 +93,7 @@
 
 <body>
 
-{% block menu %}
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">Mapa da Segurança Pública do Rio de Janeiro</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="/dashboard/">Dashboard</a></li>
-                    <li><a href="#">Configurações</a></li>
-                    <li><a href="#">Ajuda</a></li>
-                    <li><a href="#">Sobre</a></li>
-                    <li><a href="#">Login</a></li>
-                </ul>
-                <form class="navbar-form navbar-right">
-                    <input type="text" class="form-control" placeholder="Search...">
-                </form>
-            </div>
-        </div>
-    </div>
-{% endblock menu %}
+
 
 {% block conteudo %}
     <div class="container-fluid">
@@ -292,11 +272,6 @@
 
     //});
 </script>
-    <div class="footer">
-        <div class="container">
-            <img  src="{% static 'images/emap_logo.png' %}" alt="logotipo emap" height="35px">
-            <img  src="{% static 'images/igarape_logo.png' %}" alt="logotipo igarape" height="35px">
-        </div>
-    </div>
+
 </body>
 </html>
