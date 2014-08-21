@@ -1,8 +1,17 @@
+#from polmil.views import *
 from django.conf.urls import patterns, include, url
-from polmil.views import *
 
+from django.contrib import admin
+admin.autodiscover()
 
 urlpatterns = patterns('',
+    # Examples:
+    url(r'^$', 'polmil.views.index', name='home'),
+    # url(r'^blog/', include('blog.urls')),
+
+    url(r'^admin/', include(admin.site.urls)),
+
+# urlpatterns = patterns('',
     
     #acciones sobre base de datos
     #url(r'^importar-bd/', importar_bd),
@@ -17,7 +26,7 @@ urlpatterns = patterns('',
     #--------------------------------
 #    url(r'^caso/([a-zA-Z0-9_-]+)/$', caso),
 #    url(r'^caso-json/$', caso_json),
-    url(r'^mapa/', mapa),
+#    url(r'^mapa/', mapa),
 #    url(r'^cargar-marcadores/', cargar_marcadores),
 #    url(r'^buscar/', buscar),
 
