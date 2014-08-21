@@ -42,7 +42,7 @@ print "DB: ", DATABASE_PATH
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = '^ic==-ksn(f@kd8(f9u_n&6s9o)u7j+kq$4$rjc7gz5x%0=ugy'
 
-# SECURITY WARNING: don't run with debug turned on in production! 
+# SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 TEMPLATE_DEBUG = True
 
