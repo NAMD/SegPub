@@ -1,75 +1,59 @@
-from django.shortcuts import render, render_to_response, RequestContext
+# -*- coding: utf-8 -*-
+from polmil.models import *
+from django.http import HttpResponse
+from django.shortcuts import render_to_response, redirect
 from django.template import RequestContext
-from django.shortcuts import render_to_response
-from models import Segpub
-from django.shortcuts import get_object_or_404, render
-from django.http import HttpResponseRedirect
-from django.core.urlresolvers import reverse
-from django.views import generic
-from django.views.generic import TemplateView
+import requests
+from geoposition import Geoposition
+import json
+from django.views.decorators.csrf import csrf_exempt
+from django.db.models import Q
+from simplesearch.functions import get_query
+from django.contrib.auth.decorators import login_required
 
 
-# Create your views here.
-
-#def home(request):
-
-#    return render_to_response("polmil/index.html",
-#                              locals(),
-#                              context_instance=RequestContext(request))
+# -*- coding: utf-8 -*-
+def index (request):
+    #return render_to_response('index.html', locals(), context_instance=RequestContext(request))
+    return redirect("/polmil/mapa/")
 
 
-def index(request):
-#     # Request the context of the request.
-#     # The context contains information such as the client's machine details, for example.
-     context = RequestContext(request)
-#
-#     # Construct a dictionary to pass to the template engine as its context.
-#     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-     context_dict = {'boldmessage': "I am bold font from the context"}
-#
-#     # Return a rendered response to send to the client.
-#     # We make use of the shortcut function to make our lives easier.
-#     # Note that the first parameter is the template we wish to use.
-     return render_to_response('polmil/index.html', context_dict, context)
+def caso (request, id):
+    caso = Caso.objects.get(id=id)
+    return render_to_response('caso.html', locals(), context_instance=RequestContext(request))
+
+@csrf_exempt
+def caso_json(request):
+    id_caso=request.POST['id_caso']
+    caso = Caso.objects.get(id=id_caso)
+    return render_to_response('modal-caso.html', locals(), context_instance=RequestContext(request))
+
+def mapa (request):
+    return render_to_response('polmil/mapa.html', locals(), context_instance=RequestContext(request))
+
+def los_muertos_de_2001 (request):
+    casos = Caso.objects.filter(pk__in=[22, 41, 51, 70, 74, 83, 93, 142, 230, 247, 360, 393, 438, 426, 455, 496, 577, 587, 629, 650, 661, 671, 745, 817, 874, 889, 899, 916, 966, 997, 1001, 1022, 1055, 1075, 1694, 1194, 1224, 1259])
+    print casos.count()
+    return render_to_response('los-muertos-de-2001.html', locals(), context_instance=RequestContext(request))
 
 
-# def dashboard(request):
-#     # Request the context of the request.
-#     # The context contains information such as the client's machine details, for example.
-#     context = RequestContext(request)
-#
-#     # Construct a dictionary to pass to the template engine as its context.
-#     # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-#     context_dict = {'boldmessage': "I am bold font from the context"}
-#
-#     # Return a rendered response to send to the client.
-#     # We make use of the shortcut function to make our lives easier.
-#     # Note that the first parameter is the template we wish to use.
-#     return render_to_response('polmil/dashboard.html', context_dict, context)
-#
-#
-# def chamados(request):
-#     c = Segpub.objects.all()
-#
-#     context = RequestContext(request)
-#
-#     context_dict = {'boldmessage': "I am bold font from the context"}
-#
-#     return render_to_response('polmil/chamados.html', {'chamados': c})
+def buscar (request):
+
+    if 'q' in request.GET:
+        query = request.GET["q"]
+        if query:
+            if len(query) > 3:
+                filtros = get_query(query, ['nombre', 'apellido'])
+                casos = Caso.objects.filter(filtros).distinct()
+            else:
+                mensaje_error = "La palabra buscada es demasiado corta"
+
+    return render_to_response('polmil/buscar.html', locals(), context_instance=RequestContext(request))
 
 
-#class IndexView(generic.ListView):
-#    template_name = 'polmil/index.html'
-#    context_object_name = 'latest_poll_list'
-
-#    def get_queryset(self):
-#        """Return the last five published polls."""
-#        return Segpub.objects.order_by('-pub_date')[:5]
+def que_es (request):
+    return render_to_response('polmil/quemsomos.html', locals(), context_instance=RequestContext(request))
 
 
-def dashboard(request):
-    return render_to_response('polmil/dashboard.html')
-
-
-def chamados(request):
-    return render_to_response('polmil/chamados.html')
+def sumate (request):
+    return render_to_response('polmil/sumario.html', locals(), context_instance=RequestContext(request))

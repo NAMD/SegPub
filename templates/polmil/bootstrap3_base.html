@@ -1,53 +1,38 @@
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+
 {% load bootstrap3 %}
 {% load static %}
 
-<html>
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
+<head>
     <!-- Bootstrap -->
     {% bootstrap_javascript jquery=True %}
     {% bootstrap_css %}
 
-    <title>Mapa da Segurança Pública - {% block bootstrap3_title %}{% endblock %}</title>
+    <title>{% block bootstrap3_title %} Mapa da Segurança Pública - {% endblock %}</title>
 
-    {% block extra_head %}
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Content-Language" content="pt-br" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="Python, Django" />
+    <meta name="description" content="{% block description %}Visualização de Dados Interativa da    Segurança Pública do Rio de Janeiro.{% endblock %}" />
 
-    <!-- Custom styles
-    <link href="{% static "lib/css/custom.css" %}" rel="stylesheet">
-    Custom styles for Dashboard
-    <link href="{% static "lib/css/dashboard.css" %}" rel="stylesheet"> -->
+    {% block extra_css %}
+	{% endblock %}
 
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="{% static  "lib/js/ie10-viewport-bug-workaround.js" %}"></script>
-    {% endblock %}
-        <style>
-        .jumbotron {
-            padding-top: 58px;
-            padding-bottom: 0;
-            margin-bottom: 0;
-        }
-        #carregando {
-        	position:fixed;
-	        top:0;
-	        left:0;
-	        width:100%;
-	        height:100%;
-            opacity: 0.65;
-	        background-color:#65a9d7;
-	        color:#fff;
-	        font-size:2em;
-	        padding:25% 55%;
-	        z-index:10;
-		}
-    </style>
+    <script src="{% static "lib/js/filtros.js" %}" type="text/javascript"></script>
+
+    {% block extra_js %}
+	{% endblock %}
+
 </head>
 
 <body>
     {% block bootstrap3_content %}{% endblock %}
     <div class="footer">
-        <div class="container">
+        <div class="container text-center">
             <img  src="{% static 'images/emap_logo.png' %}" height="50px" align="middle">
             <img  src="{% static 'images/igarape_logo.png' %}" height="50px" align="middle">
         </div>
