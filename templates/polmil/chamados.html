@@ -126,7 +126,7 @@
     <div class="container-fluid">
         <div class="row">
                 <h1 class="page-header">Chamados 190</h1>
-     	        <div id="mapa"></div>
+     	        <div id="mapaleaf"></div>
                 <div id="carregando">Carregando...</div>
         </div>
     </div>
@@ -135,7 +135,7 @@
 <script type="text/javascript">
     //;$(function() {
 
-    var mapa = L.map('mapa', {attributionControl:false}).setView([-22.92,-43.22], 10);
+    var mapa = L.map('mapaleaf', {attributionControl:false}).setView([-22.92,-43.22], 10);
         osmLayer = new L.TileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(mapa);
 
     // Leaflet MarkerCluster

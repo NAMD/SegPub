@@ -1,6 +1,6 @@
-#from polmil.views import *
 from django.conf.urls import patterns, include, url
 from django.views.generic import TemplateView
+#from views import *
 
 from django.contrib import admin
 admin.autodiscover()
@@ -16,6 +16,8 @@ urlpatterns = patterns('SegPub.polmil.views',
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
+
+    #url(r'^cargar-marcadores/', cargar_marcadores),
     )
     # urlpatterns = patterns('',
     

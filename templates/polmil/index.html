@@ -27,8 +27,6 @@
 {% block style %}
     <!-- Custom styles-->
     <link href="{% static "lib/css/custom.css" %}" rel="stylesheet">
-    <!-- Custom styles for Dashboard -->
-    <link href="{% static "lib/css/dashboard.css" %}" rel="stylesheet">
 
     <!-- Leaflet 0.73: -->
     <link rel="stylesheet" href="{% static "lib/leaflet/css/leaflet.css" %}"/>
@@ -91,7 +89,7 @@
 {% block conteudo %}
     <div class="container-fluid">
         <div class="row">
-     	        <div id="mapa"></div>
+     	        <div id="mapaleaf"></div>
                 <div id="carregando">Carregando...</div>
         </div>
     </div>
@@ -100,7 +98,7 @@
 <script type="text/javascript">
     //;$(function() {
 
-    var mapa = L.map('mapa', {attributionControl:false}).setView([-22.92,-43.22], 10);
+    var mapa = L.map('mapaleaf', {attributionControl:false}).setView([-22.92,-43.22], 10);
     L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png',
     { maxZoom: 18 })
     .addTo(mapa);
@@ -151,7 +149,6 @@
     //});
 </script>
 
-</body>
 
     <div class="footer">
         <div class="container text-center">
@@ -160,4 +157,6 @@
         </div>
     </div>
 
+
+</body>
 </html>

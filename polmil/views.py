@@ -10,39 +10,46 @@ from django.views.decorators.csrf import csrf_exempt
 from django.db.models import Q
 from simplesearch.functions import get_query
 from django.contrib.auth.decorators import login_required
-from django.views.generic.base import direct_to_template
-
-#from django.shortcuts import render, render_to_response, RequestContext
-from django.template import RequestContext
-from django.shortcuts import render_to_response
-
-# Create your views here.
-
-# def home(request):
-#
-#    return render_to_response("index.html",
-#                              locals(),
-#                              context_instance=RequestContext(request))
 
 
+#def index(request):
+    #return render_to_response('index.html', locals(), context_instance=RequestContext(request))
+#    return redirect("/mapa/")
 
+@csrf_exempt
+def cargar_marcadores(request):
 
+    if request.method == "POST":
 
+        desde = request.POST["desde"]
+        hasta = request.POST["hasta"]
+        tipo_edad = request.POST["tipo_edad"]
+        sexo = request.POST["sexo"]
+        fuerza = request.POST["fuerza"]
+        provincia = request.POST["provincia"]
 
+        q = Q()
 
+        q = q & Q(anio__gte=desde)
+        q = q & Q(anio__lte=hasta)
 
+        if tipo_edad:
+            q = q & Q(tipo_edad__id=tipo_edad)
 
+        if sexo:
+            q = q & Q(sexo=sexo)
 
+        if fuerza:
+            q = q & Q(fuerza=fuerza)
 
+        if provincia:
+            q = q & Q(provincia=provincia)
 
+        casos = list(Caso.objects.filter(q).values_list('coordenadas', 'nombre', 'apellido', 'id', 'sexo').exclude(coordenadas=Geoposition(0,0)))
+    else:
+        casos = list(Caso.objects.filter(anio=2011).values_list('coordenadas', 'nombre', 'apellido', 'id', 'sexo').exclude(coordenadas=Geoposition(0,0)))
 
-
-
-# -*- coding: utf-8 -*-
-# def index (request):
-#     #return render_to_response('index.html', locals(), context_instance=RequestContext(request))
-#     return redirect("/polmil/mapa/")
-
+    return HttpResponse(json.dumps(casos), content_type="application/json")
 
 def caso (request, id):
     caso = Caso.objects.get(id=id)

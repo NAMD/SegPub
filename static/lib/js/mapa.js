@@ -52,7 +52,7 @@ $(document).ready(function() {
     map.on('popupopen', function() {  
       $('.caso-popup').click(function(e){
           var id_caso = $(this).attr("id_caso");
-          $.post( "/archivo/caso-json/", {
+          $.post( "/caso-json/", {
               id_caso: id_caso,
           }, function( data ) {
             $('#modal-caso .modal-content').html(data);
@@ -66,7 +66,7 @@ $(document).ready(function() {
       console.log("prueba popup");
       var id_caso = $(this).attr("id_caso");
 
-      $.post( "/archivo/cargar-marcadores/", {
+      $.post( "/cargar-marcadores/", {
           id_caso: id_caso,
       }, function( data ) {
         
@@ -82,7 +82,7 @@ $(document).ready(function() {
 
 
 function cargar_marcadores () {
-	$.get( "/archivo/cargar-marcadores/", function( data ) {
+	$.get( "/cargar-marcadores/", function( data ) {
 		crear_marcadores (data);
 	});
 }
