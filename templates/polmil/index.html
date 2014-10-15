@@ -105,6 +105,8 @@
 
     // Leaflet MarkerCluster
     var ocorrencias = L.geoCsv(null, {
+    fieldSeparator: '|',
+    firstLineTitles: true,
 	onEachFeature: function (feature, layer) {
 		var popup = '';
 		for (var indice in feature.properties) {
