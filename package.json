@@ -1,0 +1,19 @@
+{
+  "name": "SegPub",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/israelst/SegPub.git"
+  },
+  "author": "",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/israelst/SegPub/issues"
+  },
+  "homepage": "https://github.com/israelst/SegPub"
+}
