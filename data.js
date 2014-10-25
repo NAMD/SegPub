@@ -1,7 +1,12 @@
 var fs = require('fs'),
     https = require('https'),
-    zlib = require('zlib'),
-    output = fs.createWriteStream('static/data/segpub.csv');
+    path = require('path'),
+    zlib = require('zlib');
+
+function dataFileStream(filename){
+    var filePath = path.join('static', 'data', filename);
+    return fs.createWriteStream(filePath);
+}
 
 https.get({
     host: 'static.hpc.pypln.org',
@@ -9,7 +14,8 @@ https.get({
     rejectUnauthorized: false,
     headers: {'accept-encoding': 'gzip'}
 }).on('response', function(response){
+    response.pipe(dataFileStream('segpub.csv.gz'));
     response.pipe(zlib.createGunzip())
-            .pipe(output);
+            .pipe(dataFileStream('segpub.csv'));
 });
 
