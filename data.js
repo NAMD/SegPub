@@ -3,13 +3,13 @@ var fs = require('fs'),
     zlib = require('zlib'),
     output = fs.createWriteStream('static/data/segpub.csv');
 
-var request = https.get({ host: 'static.hpc.pypln.org',
-                          path: '/segpub.csv.gz',
-                          port: 443,
-                          rejectUnauthorized: false,
-                          headers: { 'accept-encoding': 'gzip' } });
-
-request.on('response', function(response) {
-    response.pipe(zlib.createGunzip()).pipe(output);
+https.get({
+    host: 'static.hpc.pypln.org',
+    path: '/segpub.csv.gz',
+    rejectUnauthorized: false,
+    headers: {'accept-encoding': 'gzip'}
+}).on('response', function(response){
+    response.pipe(zlib.createGunzip())
+            .pipe(output);
 });
 
