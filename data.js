@@ -8,6 +8,8 @@ function dataFileStream(filename){
     return fs.createWriteStream(filePath);
 }
 
+// We can't trust in response file type readers
+// and the certificate is self signed
 https.get({
     host: 'static.hpc.pypln.org',
     path: '/segpub.csv.gz',
