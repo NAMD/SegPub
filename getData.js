@@ -24,6 +24,7 @@ https.get({
     response.pipe(zlib.createGunzip())
             .pipe(fs.createWriteStream(csvFile));
     response.on('end', function(){
+        // The modified time of the file and last-modified header don't match
         var mtime = new Date(this.headers['last-modified']);
         fs.utimesSync(gzFile, mtime, mtime);
         console.log('Done.');
