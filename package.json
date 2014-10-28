@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "clean": "rm -vf static/data/segpub.csv*",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
