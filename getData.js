@@ -20,9 +20,13 @@ https.get({
     headers: headers
 }).on('response', function(response){
     console.info('Status code: ', response.statusCode);
-    response.pipe(fs.createWriteStream(gzFile));
-    response.pipe(zlib.createGunzip())
-            .pipe(fs.createWriteStream(csvFile));
+    if(response.statusCode === 200){
+        response.pipe(fs.createWriteStream(gzFile));
+        response.pipe(zlib.createGunzip())
+                .pipe(fs.createWriteStream(csvFile));
+    }else{
+        response.resume();
+    }
     response.on('end', function(){
         // The modified time of the file and last-modified header don't match
         var mtime = new Date(this.headers['last-modified']);
