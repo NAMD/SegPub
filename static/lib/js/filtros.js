@@ -43,7 +43,7 @@ function crear_consulta (){
     var fuerza = $("#fuerza").val();
     var provincia = $("#provincia").val();
     
-    $.post( "/archivo/cargar-marcadores/", {
+    $.post( "/cargar-marcadores/", {
         desde: desde,
         hasta: hasta,
         tipo_edad: tipo_edad,

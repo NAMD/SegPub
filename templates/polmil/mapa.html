@@ -17,54 +17,16 @@
 	<!-- MarkerCluster https://github.com/danzel/Leaflet.markercluster -->
 	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.css" %}" />
 	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.Default.css" %}" />
-
-    <!-- Leaflet File Layer
-    <link rel="stylesheet" href="{% static "lib/FileLayer/css/font-awesome.min.css" %}" /> -->
-
-    <!-- Leaflet OSMSearch
-    <link rel="stylesheet" href="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.css"/> -->
-
-    <!-- Leaflet PanelLayers
-    <link rel="stylesheet" href="{% static "lib/PanelLayers/css/style.css" %}" />
-    <link rel="stylesheet" href="{% static "lib/PanelLayers/css/leaflet-panel-layers.css" %}"/>
-    <link rel="stylesheet" href="{% static "lib/PanelLayers/css/icons.css" %}" />-->
 {% endblock %}
 
 {% block extra_js %}
     <!-- Leaflet 0.73: -->
 	<script src="{% static "lib/leaflet/js/leaflet.js" %}"></script>
 
-    <!--<script type = 'text/javascript' src="{% static "lib/PanelLayers/js/leaflet.js" %}"></script> -->
-
     <!-- MarkerCluster https://github.com/danzel/Leaflet.markercluster -->
     <script type = 'text/javascript' src="{% static "lib/MarkerCluster/js/leaflet.markercluster-src.js" %}"></script>
-
-    <!-- GeoCSV: https://github.com/joker-x/Leaflet.geoCSV
-    <script type = 'text/javascript' src="{% static "lib/GeoCsv/js/leaflet.geocsv-src.js" %}"></script>-->
-
-    <!-- Leaflet File Layer
-    <script type = 'text/javascript' src="{% static "lib/FileLayer/js/leaflet.filelayer.js" %}"></script>
-    <script type = 'text/javascript' src="{% static "lib/FileLayer/js/togeojson/togeojson.js" %}"></script>-->
-
-    <!-- Leafllet Heat
-    <script type = 'text/javascript' src="{% static "lib/js/2013-earthquake.js" %}"></script>
-    <script type = 'text/javascript' src="http://leaflet.github.io/Leaflet.heat/dist/leaflet-heat.js"></script> -->
-
-    <!-- Leaflet OSMGeocoder
-    <script type = 'text/javascript' src="http://k4r573n.github.io/leaflet-control-osm-geocoder/Control.OSMGeocoder.js"></script>-->
-
-    <!-- Leaflet PanelLayers
-    <script type = 'text/javascript' src="{% static "lib/PanelLayers/js/leaflet-panel-layers.js" %}"></script> -->
-
-    <!-- GEOJSON DATA
-    <script type = 'text/javascript' src="{% static "lib/PanelLayers/data/bar.js" %}"></script>
-    <script type = 'text/javascript' src="{% static "lib/PanelLayers/data/fuel.js" %}"></script>
-    <script type = 'text/javascript' src="{% static "lib/PanelLayers/data/parking.js" %}"></script>
-    <script type = 'text/javascript' src="{% static "lib/PanelLayers/data/drinking_water.js" %}"></script> -->
-
-	<script src="{% static "lib/js/mapa.js" %}" type="text/javascript"></script>
-
-{% endblock %}
+    <script src="{% static "lib/js/mapa.js"  %}" type="text/javascript"></script>
+ {% endblock %}
 
 {% block body_class %}mapa{% endblock %}
 
@@ -75,21 +37,19 @@
 			{{caso.coordenadas}}
 		{% endfor %}
 
-
 		<div id="mapa"></div>
+
 		<div class="firma">
 			<a href="http://emap.fgv.br" target="_blank">
-				<img src="{% static "images/emap_logo.png" %}">
+				<img  src="{% static 'images/emap_logo.png' %}" alt="logotipo emap" height="35px">
 			</a>
-
 			<a href="http://igarape.org.br" target="_blank">
-				<img src="{% static "images/igarape_logo.png" %}">
-
+				<img  src="{% static 'images/igarape_logo.png' %}" alt="logotipo igarape" height="35px">
 			</a>
 		</div>
+
 	</div>
 {% endblock %}
-
 
 {% block opcoes %}
     <div class="col-lg-3 col-md-3 col-sm-3 opciones">
@@ -260,8 +220,7 @@
                 <li><a val="">Todas las fuerzas</a></li>
               </ul>
             </div>
-        
-            
+
         </div>
         
         <div class="destacado">
@@ -277,6 +236,3 @@
 
 {% endblock %}
 
-{% block footer %}
-    {% include "polmil/footer.html" %}
-{% endblock %}

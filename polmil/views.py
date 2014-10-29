@@ -12,52 +12,44 @@ from simplesearch.functions import get_query
 from django.contrib.auth.decorators import login_required
 
 
-#from django.shortcuts import render, render_to_response, RequestContext
-from django.template import RequestContext
-from django.shortcuts import render_to_response
+#def index(request):
+    #return render_to_response('index.html', locals(), context_instance=RequestContext(request))
+#    return redirect("/mapa/")
 
-# Create your views here.
+@csrf_exempt
+def cargar_marcadores(request):
 
-# def home(request):
-#
-#    return render_to_response("index.html",
-#                              locals(),
-#                              context_instance=RequestContext(request))
+    if request.method == "POST":
 
+        desde = request.POST["desde"]
+        hasta = request.POST["hasta"]
+        tipo_edad = request.POST["tipo_edad"]
+        sexo = request.POST["sexo"]
+        fuerza = request.POST["fuerza"]
+        provincia = request.POST["provincia"]
 
-def index(request):
-    # Request the context of the request.
-    # The context contains information such as the client's machine details, for example.
-    context = RequestContext(request)
+        q = Q()
 
-    # Construct a dictionary to pass to the template engine as its context.
-    # Note the key boldmessage is the same as {{ boldmessage }} in the template!
-    context_dict = {'boldmessage': "I am bold font from the context"}
+        q = q & Q(anio__gte=desde)
+        q = q & Q(anio__lte=hasta)
 
-    # Return a rendered response to send to the client.
-    # We make use of the shortcut function to make our lives easier.
-    # Note that the first parameter is the template we wish to use.
-    return render_to_response('polmil/index.html', context_dict, context)
+        if tipo_edad:
+            q = q & Q(tipo_edad__id=tipo_edad)
 
+        if sexo:
+            q = q & Q(sexo=sexo)
 
+        if fuerza:
+            q = q & Q(fuerza=fuerza)
 
+        if provincia:
+            q = q & Q(provincia=provincia)
 
+        casos = list(Caso.objects.filter(q).values_list('coordenadas', 'nombre', 'apellido', 'id', 'sexo').exclude(coordenadas=Geoposition(0,0)))
+    else:
+        casos = list(Caso.objects.filter(anio=2011).values_list('coordenadas', 'nombre', 'apellido', 'id', 'sexo').exclude(coordenadas=Geoposition(0,0)))
 
-
-
-
-
-
-
-
-
-
-
-# -*- coding: utf-8 -*-
-# def index (request):
-#     #return render_to_response('index.html', locals(), context_instance=RequestContext(request))
-#     return redirect("/polmil/mapa/")
-
+    return HttpResponse(json.dumps(casos), content_type="application/json")
 
 def caso (request, id):
     caso = Caso.objects.get(id=id)

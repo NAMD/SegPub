@@ -1,10 +1,10 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 
 {% load bootstrap3 %}
 {% load static %}
-
 
 <head>
     <!-- Bootstrap -->
@@ -26,16 +26,9 @@
 
     {% block extra_js %}
 	{% endblock %}
-
 </head>
 
-<body>
-    {% block bootstrap3_content %}{% endblock %}
-    <div class="footer">
-        <div class="container text-center">
-            <img  src="{% static 'images/emap_logo.png' %}" height="50px" align="middle">
-            <img  src="{% static 'images/igarape_logo.png' %}" height="50px" align="middle">
-        </div>
-    </div>
+<body class="{% block body_class %}{% endblock %}">
+
 </body>
 </html>

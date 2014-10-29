@@ -1,17 +1,25 @@
-#from polmil.views import *
 from django.conf.urls import patterns, include, url
+from django.views.generic import TemplateView
+#from views import *
 
 from django.contrib import admin
 admin.autodiscover()
 
-urlpatterns = patterns('',
+urlpatterns = patterns('SegPub.polmil.views',
     # Examples:
-    url(r'^$', 'polmil.views.index', name='home'),
+    url(r'^$', TemplateView.as_view(template_name="polmil/index.html")),
+    url(r'^$dashboard/', TemplateView.as_view(template_name="polmil/dashboard.html")),
+    url(r'^chamados/', TemplateView.as_view(template_name="polmil/chamados.html")),
+    url(r'^ocorrencias/', TemplateView.as_view(template_name="polmil/ocorrencias.html")),
+    url(r'^mapa/', TemplateView.as_view(template_name="polmil/mapa.html")),
+
     # url(r'^blog/', include('blog.urls')),
 
     url(r'^admin/', include(admin.site.urls)),
 
-# urlpatterns = patterns('',
+    #url(r'^cargar-marcadores/', cargar_marcadores),
+    )
+    # urlpatterns = patterns('',
     
     #acciones sobre base de datos
     #url(r'^importar-bd/', importar_bd),
@@ -35,8 +43,3 @@ urlpatterns = patterns('',
     #paginas
 #    url(r'^que-es/', que_es),
 #    url(r'^sumate/', sumate),
-
-
-
-    
-)
