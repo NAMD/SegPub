@@ -7,9 +7,8 @@ module.exports = function(grunt) {
 			files: {
 				src: [
 					'static/js/**/*.js',
-					'!static/js/build.js',
 				],
-				dest: 'static/js/build.js',
+				dest: 'static/dist/js/build.js',
 			}
 		},
 
