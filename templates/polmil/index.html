@@ -25,15 +25,12 @@
 {% endblock meta %}
 
 {% block style %}
-    <!-- Custom styles-->
     <link href="{% static "lib/css/custom.css" %}" rel="stylesheet">
 
-    <!-- Leaflet 0.73: -->
-    <link rel="stylesheet" href="{% static "lib/leaflet/css/leaflet.css" %}"/>
+    <link rel="stylesheet" href="{% static "dist/css/leaflet.css" %}"/>
 
-	<!-- MarkerCluster https://github.com/danzel/Leaflet.markercluster -->
-	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.css" %}" />
-	<link rel="stylesheet" href="{% static "lib/MarkerCluster/css/MarkerCluster.Default.css" %}" />
+    <link rel="stylesheet" href="{% static "dist/css/MarkerCluster.css" %}" />
+    <link rel="stylesheet" href="{% static "dist/css/MarkerCluster.Default.css" %}" />
 {% endblock style %}
 
 {% block scripts %}
