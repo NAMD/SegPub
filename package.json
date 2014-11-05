@@ -4,6 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
+    "postinstall": "grunt copy:styles",
     "clean": "rm -vf static/data/segpub.csv*",
     "get-data": "node getData.js",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -17,5 +18,18 @@
   "bugs": {
     "url": "https://github.com/israelst/SegPub/issues"
   },
-  "homepage": "https://github.com/israelst/SegPub"
+  "homepage": "https://github.com/israelst/SegPub",
+  "dependencies": {
+    "leaflet": "^0.7.3",
+    "leaflet-geocsv": "^0.5.0",
+    "jquery": "^2.1.1",
+    "leaflet.markercluster": "^0.4.0",
+    "bootstrap": "^3.3.0"
+  },
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^3.1.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "browserify": "^6.2.0"
+  }
 }

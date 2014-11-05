@@ -1,6 +1,5 @@
 unipath
 django>=1.6
-django-bootstrap3
 django-leaflet
 requests
 django-geoposition
