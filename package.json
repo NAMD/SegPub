@@ -1,0 +1,21 @@
+{
+  "name": "SegPub",
+  "version": "0.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "clean": "rm -vf static/data/segpub.csv*",
+    "get-data": "node getData.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/israelst/SegPub.git"
+  },
+  "author": "",
+  "license": "GPL",
+  "bugs": {
+    "url": "https://github.com/israelst/SegPub/issues"
+  },
+  "homepage": "https://github.com/israelst/SegPub"
+}
