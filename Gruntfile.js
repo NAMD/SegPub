@@ -13,7 +13,7 @@ module.exports = function(grunt) {
 		},
         copy:{
             styles: {
-                src: 'node_modules/*/dist/*.css',
+                src: 'node_modules/*/dist/**/*.css',
                 dest: 'static/dist/css/',
                 expand: true,
                 flatten: true,
