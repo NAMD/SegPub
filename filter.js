@@ -3,9 +3,15 @@ var fs = require('fs'),
     csv = require('csv'),
     csvFile = path.join('static', 'data', 'segpub.csv');
 
-var parser = csv.parse({delimiter: '|'}),
-    input = fs.createReadStream(csvFile),
-    transformer = csv.transform(function(record, callback){
-        callback(null, record.join(' ') + '\n');
-    }, {parallel: 10});
-input.pipe(parser).pipe(transformer).pipe(process.stdout);
+var parser = csv.parse({delimiter: '|', auto_parse: true}),
+    input = fs.createReadStream(csvFile);
+
+parser.on('readable', function(){
+    var record = parser.read(),
+        initialKind = record[6],
+        finalKind = record[8];
+    if(initialKind == 'Roubo' || finalKind == 'Roubo'){
+        console.log(initialKind, '-', finalKind);
+    }
+});
+input.pipe(parser);
