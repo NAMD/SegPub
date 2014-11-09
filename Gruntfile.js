@@ -18,11 +18,20 @@ module.exports = function(grunt) {
                 expand: true,
                 flatten: true,
             }
+        },
+        mochaTest: {
+            test: {
+                options: {
+                    reporter: 'spec',
+                    clearRequireCache: true
+                },
+                src: ['test/**/*.js']
+            },
         }
 
 	});
 
 	grunt.loadNpmTasks('grunt-browserify');
 	grunt.loadNpmTasks('grunt-contrib-copy');
-
+    grunt.loadNpmTasks('grunt-mocha-test');
 };
