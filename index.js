@@ -9,6 +9,6 @@ var fs = require('fs'),
 
 file.pipe(parser)
     .pipe(filter.filterByKind('Roubo'))
-    .pipe(filter.selector(6, 8))
+    .pipe(csv.transform(filter.selector(6, 8)))
     .pipe(stringfier)
     .pipe(process.stdout);

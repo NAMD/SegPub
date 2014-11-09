@@ -2,13 +2,11 @@ var csv = require('csv');
 
 exports.selector = function(){
     var keys = [].slice.call(arguments);
-    return csv.transform(function(record){
-        var selection = [];
-        keys.forEach(function(key){
-            selection.push(record[key]);
+    return function(record){
+        return keys.map(function(key){
+            return record[key];
         });
-        return selection;
-    });
+    };
 };
 
 exports.filterByKind= function (kind){
