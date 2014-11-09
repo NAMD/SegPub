@@ -1,17 +1,22 @@
 var fs = require('fs'),
     path = require('path'),
     csv = require('csv'),
-    csvFile = path.join('static', 'data', 'segpub.csv');
+    csvFile = path.join('static', 'data', 'segpub.csv'),
+    parser = csv.parse({delimiter: '|', auto_parse: true}),
+    stringfier = csv.stringify(),
+    file = fs.createReadStream(csvFile);
 
-var parser = csv.parse({delimiter: '|', auto_parse: true}),
-    input = fs.createReadStream(csvFile);
+function filterByKind(kind){
+    return csv.transform(function(record){
+        var initialKind = record[6],
+            finalKind = record[8];
+        if(initialKind == kind || finalKind == kind){
+            return [initialKind, finalKind];
+        }
+    });
+}
 
-parser.on('readable', function(){
-    var record = parser.read(),
-        initialKind = record[6],
-        finalKind = record[8];
-    if(initialKind == 'Roubo' || finalKind == 'Roubo'){
-        console.log(initialKind, '-', finalKind);
-    }
-});
-input.pipe(parser);
+file.pipe(parser)
+    .pipe(filterByKind('Roubo'))
+    .pipe(stringfier)
+    .pipe(process.stdout);
