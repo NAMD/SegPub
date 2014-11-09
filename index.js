@@ -8,7 +8,7 @@ var fs = require('fs'),
     file = fs.createReadStream(csvFile);
 
 file.pipe(parser)
-    .pipe(filter.filterByKind('Roubo'))
+    .pipe(csv.transform(filter.filterByKind('Roubo')))
     .pipe(csv.transform(filter.selector(6, 8)))
     .pipe(stringfier)
     .pipe(process.stdout);
