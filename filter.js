@@ -9,9 +9,8 @@ exports.selector = function(){
 
 exports.filterByKind = function(kind){
     return function(record){
-        var initialKind = record[6],
-            finalKind = record[8];
-        if(initialKind == kind || finalKind == kind){
+        var finalKinds = record[8];
+        if(finalKinds === kind){
             return record;
         }
     };

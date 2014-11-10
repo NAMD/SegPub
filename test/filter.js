@@ -80,4 +80,22 @@ describe('filterByKind', function(){
                 }));
         });
     });
+    context('data with two "Ameaça", but only one as a final kind', function(){
+        var records;
+        beforeEach(function(done){
+            byKind = filter.filterByKind('Ameaça');
+            fixture.pipe(parser)
+                .pipe(csv.transform(byKind, function(err, output){
+                    records = output;
+                    assert.equal(err, null);
+                    done();
+                }));
+        });
+        it('should return only one record', function(){
+            assert.equal(records.length, 1);
+        });
+        it('should return only the one which maches at final kind', function(){
+            assert.equal(records[0][8], 'Ameaça');
+        });
+    });
 });
