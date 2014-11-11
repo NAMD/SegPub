@@ -1,34 +1,25 @@
-{% load static %}
-<link rel="stylesheet" href="{% static "dist/css/bootstrap.min.css" %}" />
+<link rel="stylesheet" href="dist/css/bootstrap.min.css" />
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
     "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
 <head>
 
-    <title>{% block titulo %}Mapa da Segurança Pública do Rio de Janeiro{% endblock %}</title>
+    <title>Mapa da Segurança Pública do Rio de Janeiro</title>
 
-{% block meta %}
     <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
     <meta http-equiv="Content-Language" content="pt-br" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="keywords" content="Python, Django" />
     <meta name="description" content="Segurança Pública do Rio de Janeiro." />
-{% endblock meta %}
 
-{% block style %}
-    <link href="{% static "lib/css/custom.css" %}" rel="stylesheet">
+    <link href="lib/css/custom.css" rel="stylesheet">
+    <link rel="stylesheet" href="dist/css/leaflet.css"/>
+    <link rel="stylesheet" href="dist/css/MarkerCluster.css" />
+    <link rel="stylesheet" href="dist/css/MarkerCluster.Default.css" />
 
-    <link rel="stylesheet" href="{% static "dist/css/leaflet.css" %}"/>
-
-    <link rel="stylesheet" href="{% static "dist/css/MarkerCluster.css" %}" />
-    <link rel="stylesheet" href="{% static "dist/css/MarkerCluster.Default.css" %}" />
-{% endblock style %}
-
-{% block scripts %}
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script type = 'text/javascript' src="{% static  "lib/js/ie10-viewport-bug-workaround.js" %}"></script>
+    <script type = 'text/javascript' src="lib/js/ie10-viewport-bug-workaround.js"></script>
 
-{% endblock scripts %}
 </head>
 
 <body>
@@ -62,21 +53,19 @@
         </div>
     </div>
 
-{% block conteudo %}
     <div class="container-fluid">
         <div class="row">
      	        <div id="mapaleaf"></div>
                 <div id="carregando">Carregando...</div>
         </div>
     </div>
-{% endblock %}
 
-    <script type = 'text/javascript' src="{% static "dist/js/build.js" %}"></script>
+    <script type = 'text/javascript' src="dist/js/build.js"></script>
 
     <div class="footer">
         <div class="container text-center">
-            <img  src="{% static 'images/emap_logo.png' %}" height="50px" align="middle">
-            <img  src="{% static 'images/igarape_logo.png' %}" height="50px" align="middle">
+            <img  src="images/emap_logo.png" height="50px" align="middle">
+            <img  src="images/igarape_logo.png" height="50px" align="middle">
         </div>
     </div>
 
