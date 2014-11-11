@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/israelst/SegPub",
   "dependencies": {
+    "express": "^4.10.2",
     "leaflet": "^0.7.3",
     "leaflet-geocsv": "^0.5.0",
     "jquery": "^2.1.1",
