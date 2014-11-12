@@ -35,7 +35,7 @@ var ocorrencias = L.geoCsv(null, {
 $.ajax ({
     type:'GET',
     dataType:'text',
-    url: '/static/data/roubos.csv',
+    url: '/data/roubos.csv',
     error: function() {
         alert('Não foi possível carregar os dados');
     },
