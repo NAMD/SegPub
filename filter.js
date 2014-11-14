@@ -7,12 +7,20 @@ exports.selector = function(){
     };
 };
 
-exports.filterByKind = function(kind){
+var filterBy = function(field, value){
     return function(record){
-        var finalKinds = record[8];
-        if(finalKinds === kind){
+        var category = record[field];
+        if(category === value){
             return record;
         }
     };
+};
+
+exports.filterByKind = function(value){
+    return filterBy(8, value);
+};
+
+exports.filterByCategory = function(value){
+    return filterBy(2, value);
 };
 

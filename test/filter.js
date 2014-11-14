@@ -99,3 +99,76 @@ describe('filterByKind', function(){
         });
     });
 });
+
+describe('filterByCategory', function(){
+    var fixture, parser;
+    beforeEach(function(){
+        parser = csv.parse({delimiter: '|'});
+        fixture = require('fs').createReadStream('test/fixture.csv');
+    });
+    context('data with 3 "DESISTÊNCIA"', function(){
+        var records;
+        beforeEach(function(done){
+            byCategory = filter.filterByCategory('DESISTÊNCIA');
+            fixture.pipe(parser)
+                .pipe(csv.transform(byCategory, function(err, output){
+                    records = output;
+                    assert.equal(err, null);
+                    done();
+                }));
+        });
+        it('should return 3 records', function(){
+            assert.equal(records.length, 3);
+        });
+        it('should return the matched records', function(){
+            var idAndCategory = records.map(filter.selector(0, 2));
+            assert.deepEqual(idAndCategory, [
+                ["2411201203186", "DESISTÊNCIA"],
+                ["2911201214451", "DESISTÊNCIA"],
+                ["1811201214673", "DESISTÊNCIA"]]);
+        });
+    });
+    context('data with 15 "OCORRÊNCIA"', function(){
+        var records;
+        beforeEach(function(done){
+            byCategory = filter.filterByCategory('OCORRÊNCIA');
+            fixture.pipe(parser)
+                .pipe(csv.transform(byCategory, function(err, output){
+                    records = output;
+                    assert.equal(err, null);
+                    done();
+                }));
+        });
+        it('should return 15 records', function(){
+            assert.equal(records.length, 15);
+        });
+        it('should return the matched records', function(){
+            var idAndCategory = records.map(filter.selector(0, 2)),
+                ids = idAndCategory.map(function(record){
+                    return record[0];
+                }),
+                categories = idAndCategory.map(function(record){
+                    return record[1];
+                });
+
+            assert.ok(categories.every(function(category){return category === 'OCORRÊNCIA';}));
+            assert.deepEqual(ids,[
+                '611201220313',
+                '1111201200982',
+                '2111201201002',
+                '1211201203254',
+                '2811201220897',
+                '1411201220431',
+                '211201217207',
+                '1711201201361',
+                '2011201201476',
+                '1211201215327',
+                '1411201207783',
+                '2111201201897',
+                '1411201200346',
+                '411201203508',
+                '2411201218891'
+                ]);
+        });
+    });
+});
