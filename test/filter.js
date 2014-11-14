@@ -36,7 +36,7 @@ describe('Selector', function(){
 describe('filterByKind', function(){
     var fixture, parser;
     beforeEach(function(){
-        parser = csv.parse({delimiter: '|'});
+        parser = csv.parse({delimiter: '|', columns: true});
         fixture = require('fs').createReadStream('test/fixture.csv');
     });
     context('with no matches', function(){
@@ -53,12 +53,16 @@ describe('filterByKind', function(){
         it('should return the mached record', function(){
             var byKind = filter.filterByKind('Atropelamento');
             fixture.pipe(parser)
-                .pipe(csv.transform(byKind, function(err, output){
+                .pipe(csv.transform(byKind, function(err, records){
+                    var incident = records[0],
+                        initialKind = incident['Descrição Natureza Inicial'],
+                        finalKind = incident['Descrição Natureza Final'],
+                        id = incident['Protocolo'];
                     assert.equal(err, null);
-                    assert.equal(output.length, 1);
-                    assert.equal(output[0][6], 'Atropelamento');
-                    assert.equal(output[0][8], 'Atropelamento');
-                    assert.equal(output[0][0], '1211201203254');
+                    assert.equal(records.length, 1);
+                    assert.equal(initialKind, 'Atropelamento');
+                    assert.equal(finalKind, 'Atropelamento');
+                    assert.equal(id, '1211201203254');
                 }));
         });
     });
@@ -66,9 +70,9 @@ describe('filterByKind', function(){
         it('should return the all mached record', function(){
             var byKind = filter.filterByKind('Cancelado pelo Supervisor');
             fixture.pipe(parser)
-                .pipe(csv.transform(byKind, function(err, output){
-                    var initialKinds = output.map(function(v){
-                        return v[6];
+                .pipe(csv.transform(byKind, function(err, records){
+                    var initialKinds = records.map(function(v){
+                        return v['Descrição Natureza Inicial'];
                     });
                     assert.equal(err, null);
                     assert.deepEqual(initialKinds, [
@@ -76,7 +80,7 @@ describe('filterByKind', function(){
                         'Informe',
                         'Pertubação do Trabalho e Sossego',
                         'Entorpecente (posse e uso)' ]);
-                    assert.equal(output.length, 4);
+                    assert.equal(records.length, 4);
                 }));
         });
     });
@@ -95,7 +99,7 @@ describe('filterByKind', function(){
             assert.equal(records.length, 1);
         });
         it('should return only the one which maches at final kind', function(){
-            assert.equal(records[0][8], 'Ameaça');
+            assert.equal(records[0]['Descrição Natureza Final'], 'Ameaça');
         });
     });
 });

@@ -17,7 +17,7 @@ var filterBy = function(field, value){
 };
 
 exports.filterByKind = function(value){
-    return filterBy(8, value);
+    return filterBy('Descrição Natureza Final' , value);
 };
 
 exports.filterByCategory = function(value){
