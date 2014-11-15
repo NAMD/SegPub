@@ -156,7 +156,7 @@ describe('filterByCategory', function(){
                 });
 
             assert.ok(categories.every(function(category){return category === 'OCORRÊNCIA';}));
-            assert.deepEqual(ids,[
+            assert.deepEqual(ids, [
                 '611201220313',
                 '1111201200982',
                 '2111201201002',
