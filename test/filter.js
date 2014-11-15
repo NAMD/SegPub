@@ -107,7 +107,7 @@ describe('filterByKind', function(){
 describe('filterByCategory', function(){
     var fixture, parser;
     beforeEach(function(){
-        parser = csv.parse({delimiter: '|'});
+        parser = csv.parse({delimiter: '|', columns: true});
         fixture = require('fs').createReadStream('test/fixture.csv');
     });
     context('data with 3 "DESISTÊNCIA"', function(){
@@ -125,7 +125,7 @@ describe('filterByCategory', function(){
             assert.equal(records.length, 3);
         });
         it('should return the matched records', function(){
-            var idAndCategory = records.map(filter.selector(0, 2));
+            var idAndCategory = records.map(filter.selector('Protocolo', 'Categoria'));
             assert.deepEqual(idAndCategory, [
                 ["2411201203186", "DESISTÊNCIA"],
                 ["2911201214451", "DESISTÊNCIA"],
@@ -147,7 +147,7 @@ describe('filterByCategory', function(){
             assert.equal(records.length, 15);
         });
         it('should return the matched records', function(){
-            var idAndCategory = records.map(filter.selector(0, 2)),
+            var idAndCategory = records.map(filter.selector('Protocolo', 'Categoria')),
                 ids = idAndCategory.map(function(record){
                     return record[0];
                 }),

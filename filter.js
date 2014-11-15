@@ -21,6 +21,6 @@ exports.filterByKind = function(value){
 };
 
 exports.filterByCategory = function(value){
-    return filterBy(2, value);
+    return filterBy('Categoria', value);
 };
 
