@@ -6,6 +6,8 @@ var fs = require('fs'),
     filter  = require('./filter'),
     csvFile = path.join('static', 'data', 'segpub.csv');
 
+require('./getData');
+
 var incidents = [],
     storeData = csv.transform([].push.bind(incidents));
 
