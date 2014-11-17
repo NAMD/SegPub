@@ -6,14 +6,8 @@ var fs = require('fs'),
     filter  = require('./filter'),
     csvFile = path.join('static', 'data', 'segpub.csv');
 
-var incidents = {},
-    storeData = csv.transform(function(record){
-        var finalKind = record['Descrição Natureza Final'];
-        if(incidents[finalKind] === undefined){
-           incidents[finalKind] = [];
-        }
-        incidents[finalKind].push(record);
-    });
+var incidents = [],
+    storeData = csv.transform([].push.bind(incidents));
 
 storeData.on('finish', function(){
     console.log('The incidents are in memory.');
@@ -27,12 +21,13 @@ file.pipe(parser)
     .resume();
 
 app.get('/incidents', function(req, res){
+    var finalKind = req.query.finalKind || 'Roubo';
     res.set('Content-Type', 'text/csv');
 
     csv.stringify(
-        incidents['Roubo'],
-        {delimiter: '|', header: true}
-    ).pipe(res);
+        incidents.filter(filter.filterByKind(finalKind)),
+        {delimiter: '|', header: true})
+    .pipe(res);
 });
 
 exports.app = app;
