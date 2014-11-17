@@ -5,7 +5,7 @@ var L = require('leaflet'),
 require('leaflet-geocsv');
 require('leaflet.markercluster');
 
-L.tileLayer('http://tile.openstreetmap.org/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(mapa);
+L.tileLayer('http://b.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(mapa);
 
 var ocorrencias = L.geoCsv(null, {
     fieldSeparator: '|',
