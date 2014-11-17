@@ -34,8 +34,15 @@ module.exports = function(grunt) {
                 options: {
                     spawn: false,
                 },
-                files: '**/*.js',
+                files: ['*.js', 'test/**/*.js'],
                 tasks: ['mochaTest']
+            },
+            frontJs: {
+                options: {
+                    spawn: false,
+                },
+                files: 'static/**/*.js',
+                tasks: ['browserify']
             }
         }
 
