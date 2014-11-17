@@ -33,6 +33,14 @@ describe('Selector', function(){
     });
 });
 
+describe('filterBy', function(){
+    it('usage in array context', function(){
+        var data = [[0, 0], [42, 0], [0, 42]],
+            filterBy = filter.filterBy;
+        assert.deepEqual(data.filter(filterBy(0, 42)), [[42, 0]]);
+    });
+});
+
 describe('filterByKind', function(){
     var fixture, parser;
     beforeEach(function(){
