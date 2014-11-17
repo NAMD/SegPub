@@ -30,4 +30,14 @@ app.get('/incidents', function(req, res){
     .pipe(res);
 });
 
+app.get('/incidents/summary', function(req, res){
+    var summary = incidents.reduce(function(summary, curr){
+        var finalKind = curr['Descrição Natureza Final'];
+        summary[finalKind] |= 0;
+        summary[finalKind]++;
+        return summary;
+    }, {});
+    res.json(summary);
+});
+
 exports.app = app;
