@@ -19,6 +19,13 @@ module.exports = function(grunt) {
                 flatten: true,
             }
         },
+        csscomb: {
+            dynamic_mappings: {
+                expand: true,
+                src: ['static/css/**/*.css'],
+                dest: ''
+            }
+        },
         mochaTest: {
             test: {
                 options: {
@@ -51,5 +58,6 @@ module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-browserify');
     grunt.loadNpmTasks('grunt-contrib-copy');
     grunt.loadNpmTasks('grunt-contrib-watch');
+    grunt.loadNpmTasks('grunt-csscomb');
     grunt.loadNpmTasks('grunt-mocha-test');
 };
