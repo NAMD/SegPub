@@ -22,8 +22,8 @@ var ocorrencias = L.geoCsv(null, {
     pointToLayer: function (feature, latlng) {
         return L.marker(latlng, {
             icon:L.icon({
-                iconUrl: '/static/images/chamado.png',
-                shadowUrl: '/static/images/marker-shadow.png',
+                iconUrl: '/images/chamado.png',
+                shadowUrl: '/images/marker-shadow.png',
                 iconSize: [28,35],
                 shadowSize:   [41, 41],
                 shadowAnchor: [13, 20]
@@ -35,7 +35,7 @@ var ocorrencias = L.geoCsv(null, {
 $.ajax ({
     type:'GET',
     dataType:'text',
-    url: '/static/data/roubos.csv',
+    url: '/incidents',
     error: function() {
         alert('Não foi possível carregar os dados');
     },

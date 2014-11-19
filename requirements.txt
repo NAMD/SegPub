@@ -1,6 +1,0 @@
-unipath
-django>=1.6
-django-leaflet
-requests
-django-geoposition
-django-simplesearch

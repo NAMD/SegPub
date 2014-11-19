@@ -33,10 +33,18 @@ describe('Selector', function(){
     });
 });
 
+describe('filterBy', function(){
+    it('usage in array context', function(){
+        var data = [[0, 0], [42, 0], [0, 42]],
+            filterBy = filter.filterBy;
+        assert.deepEqual(data.filter(filterBy(0, 42)), [[42, 0]]);
+    });
+});
+
 describe('filterByKind', function(){
     var fixture, parser;
     beforeEach(function(){
-        parser = csv.parse({delimiter: '|'});
+        parser = csv.parse({delimiter: '|', columns: true});
         fixture = require('fs').createReadStream('test/fixture.csv');
     });
     context('with no matches', function(){
@@ -53,12 +61,16 @@ describe('filterByKind', function(){
         it('should return the mached record', function(){
             var byKind = filter.filterByKind('Atropelamento');
             fixture.pipe(parser)
-                .pipe(csv.transform(byKind, function(err, output){
+                .pipe(csv.transform(byKind, function(err, records){
+                    var incident = records[0],
+                        initialKind = incident['Descrição Natureza Inicial'],
+                        finalKind = incident['Descrição Natureza Final'],
+                        id = incident['Protocolo'];
                     assert.equal(err, null);
-                    assert.equal(output.length, 1);
-                    assert.equal(output[0][6], 'Atropelamento');
-                    assert.equal(output[0][8], 'Atropelamento');
-                    assert.equal(output[0][0], '1211201203254');
+                    assert.equal(records.length, 1);
+                    assert.equal(initialKind, 'Atropelamento');
+                    assert.equal(finalKind, 'Atropelamento');
+                    assert.equal(id, '1211201203254');
                 }));
         });
     });
@@ -66,9 +78,9 @@ describe('filterByKind', function(){
         it('should return the all mached record', function(){
             var byKind = filter.filterByKind('Cancelado pelo Supervisor');
             fixture.pipe(parser)
-                .pipe(csv.transform(byKind, function(err, output){
-                    var initialKinds = output.map(function(v){
-                        return v[6];
+                .pipe(csv.transform(byKind, function(err, records){
+                    var initialKinds = records.map(function(v){
+                        return v['Descrição Natureza Inicial'];
                     });
                     assert.equal(err, null);
                     assert.deepEqual(initialKinds, [
@@ -76,7 +88,7 @@ describe('filterByKind', function(){
                         'Informe',
                         'Pertubação do Trabalho e Sossego',
                         'Entorpecente (posse e uso)' ]);
-                    assert.equal(output.length, 4);
+                    assert.equal(records.length, 4);
                 }));
         });
     });
@@ -95,7 +107,80 @@ describe('filterByKind', function(){
             assert.equal(records.length, 1);
         });
         it('should return only the one which maches at final kind', function(){
-            assert.equal(records[0][8], 'Ameaça');
+            assert.equal(records[0]['Descrição Natureza Final'], 'Ameaça');
+        });
+    });
+});
+
+describe('filterByCategory', function(){
+    var fixture, parser;
+    beforeEach(function(){
+        parser = csv.parse({delimiter: '|', columns: true});
+        fixture = require('fs').createReadStream('test/fixture.csv');
+    });
+    context('data with 3 "DESISTÊNCIA"', function(){
+        var records;
+        beforeEach(function(done){
+            byCategory = filter.filterByCategory('DESISTÊNCIA');
+            fixture.pipe(parser)
+                .pipe(csv.transform(byCategory, function(err, output){
+                    records = output;
+                    assert.equal(err, null);
+                    done();
+                }));
+        });
+        it('should return 3 records', function(){
+            assert.equal(records.length, 3);
+        });
+        it('should return the matched records', function(){
+            var idAndCategory = records.map(filter.selector('Protocolo', 'Categoria'));
+            assert.deepEqual(idAndCategory, [
+                ["2411201203186", "DESISTÊNCIA"],
+                ["2911201214451", "DESISTÊNCIA"],
+                ["1811201214673", "DESISTÊNCIA"]]);
+        });
+    });
+    context('data with 15 "OCORRÊNCIA"', function(){
+        var records;
+        beforeEach(function(done){
+            byCategory = filter.filterByCategory('OCORRÊNCIA');
+            fixture.pipe(parser)
+                .pipe(csv.transform(byCategory, function(err, output){
+                    records = output;
+                    assert.equal(err, null);
+                    done();
+                }));
+        });
+        it('should return 15 records', function(){
+            assert.equal(records.length, 15);
+        });
+        it('should return the matched records', function(){
+            var idAndCategory = records.map(filter.selector('Protocolo', 'Categoria')),
+                ids = idAndCategory.map(function(record){
+                    return record[0];
+                }),
+                categories = idAndCategory.map(function(record){
+                    return record[1];
+                });
+
+            assert.ok(categories.every(function(category){return category === 'OCORRÊNCIA';}));
+            assert.deepEqual(ids, [
+                '611201220313',
+                '1111201200982',
+                '2111201201002',
+                '1211201203254',
+                '2811201220897',
+                '1411201220431',
+                '211201217207',
+                '1711201201361',
+                '2011201201476',
+                '1211201215327',
+                '1411201207783',
+                '2111201201897',
+                '1411201200346',
+                '411201203508',
+                '2411201218891'
+                ]);
         });
     });
 });
