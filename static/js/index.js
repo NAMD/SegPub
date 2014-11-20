@@ -1,6 +1,9 @@
 var L = require('leaflet'),
     $ = require('jquery'),
-    mapa = L.map('mapaleaf', {attributionControl:false}).setView([-22.92,-43.22], 10);
+    mapa = L.map('mapaleaf', {
+        attributionControl: false,
+        zoomControl: false
+    }).setView([-22.92,-43.22], 10);
 
 require('leaflet-geocsv');
 require('leaflet.markercluster');
@@ -11,7 +14,6 @@ var ocorrencias = L.geoCsv(null, {
     fieldSeparator: '|',
     firstLineTitles: true,
     onEachFeature: function (feature, layer) {
-        //console.log(feature.properties);
         var popup = '';
         for (var indice in feature.properties) {
             var title = ocorrencias.getPropertyTitle(indice);
