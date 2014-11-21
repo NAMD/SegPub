@@ -34,6 +34,12 @@ html, body{
   font-size: 1.1em;
 }
 
+footer{
+  position: fixed;
+  right: 10px;
+  bottom: 10px;
+}
+
 #mapaleaf{
   margin: 0;
   padding: 0;
