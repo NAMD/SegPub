@@ -1,5 +1,4 @@
 var L = require('leaflet'),
-    $ = require('jquery'),
     d3 = require('d3'),
     mapa = L.map('mapaleaf', {
         attributionControl: false,
@@ -10,7 +9,6 @@ var L = require('leaflet'),
         firstLineTitles: true,
         onEachFeature: function (feature, layer) {
             var popup = '', title;
-            console.log(feature)
             for (var indice in feature.properties) {
                 title = indice;
                 popup += '<b>'+title+'</b><br />'+feature.properties[indice]+'<br />';
@@ -36,26 +34,21 @@ require('leaflet.markercluster');
 L.tileLayer('http://b.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(mapa);
 
 function plot(url){
-    $('#carregando').delay(500).fadeIn('slow');
-    var ocorrencias = L.geoCsv(null, options);
+    var carregando = document.getElementById('carregando'),
+        ocorrencias = L.geoCsv(null, options);
 
-    $.ajax ({
-        type:'GET',
-        dataType:'text',
-        url: url,
-        error: function() {
-            alert('Não foi possível carregar os dados');
-        },
-        success: function(csv) {
-            var cluster = new L.MarkerClusterGroup();
-            ocorrencias.addData(csv);
-            cluster.addLayer(ocorrencias);
-            mapa.addLayer(cluster);
-            mapa.fitBounds(cluster.getBounds());
-        },
-        complete: function() {
-            $('#carregando').delay(500).fadeOut('slow');
-        }
+    carregando.style.display = 'block';
+
+    d3.text(url).get().on('load', function(csv) {
+        var cluster = new L.MarkerClusterGroup();
+        ocorrencias.addData(csv);
+        cluster.addLayer(ocorrencias);
+        mapa.addLayer(cluster);
+        mapa.fitBounds(cluster.getBounds());
+        carregando.style.display = 'none';
+    })
+    .on('error', function(){
+        alert('Não foi possível carregar os dados');
     });
 }
 
