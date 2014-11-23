@@ -41,6 +41,10 @@ footer{
   bottom: 10px;
 }
 
+footer img{
+  background-color: #fff;
+}
+
 #mapaleaf{
   margin: 0;
   padding: 0;
