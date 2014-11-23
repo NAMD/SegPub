@@ -64,6 +64,7 @@
 
 #summary input[type=radio] + label span.bar{
   display: block;
+  min-height: 3px;
   height: .3em;
   background-color: #333;
 }
