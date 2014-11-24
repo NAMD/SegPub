@@ -1,74 +1,35 @@
-<link rel="stylesheet" href="dist/css/bootstrap.min.css" />
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="pt-br" lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-br">
 <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="keywords" content="Mapa, Segurança Pública, Ocorrências, Rio de Janeiro, RJ" />
+    <meta name="description" content="Mapa da Segurança Pública do Rio de Janeiro." />
 
     <title>Mapa da Segurança Pública do Rio de Janeiro</title>
 
-    <meta http-equiv="Content-type" content="text/html; charset=utf-8" />
-    <meta http-equiv="Content-Language" content="pt-br" />
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="keywords" content="Python, Django" />
-    <meta name="description" content="Segurança Pública do Rio de Janeiro." />
+    <link href="dist/css/leaflet.css" rel="stylesheet" />
+    <link href="dist/css/MarkerCluster.css" rel="stylesheet" />
+    <link href="dist/css/MarkerCluster.Default.css" rel="stylesheet" />
 
-    <link href="lib/css/custom.css" rel="stylesheet">
-    <link rel="stylesheet" href="dist/css/leaflet.css"/>
-    <link rel="stylesheet" href="dist/css/MarkerCluster.css" />
-    <link rel="stylesheet" href="dist/css/MarkerCluster.Default.css" />
-
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script type = 'text/javascript' src="lib/js/ie10-viewport-bug-workaround.js"></script>
-
+    <link href="css/general.css" rel="stylesheet" rel="stylesheet" />
+    <link href="css/summary.css" rel="stylesheet" rel="stylesheet" />
 </head>
 
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
-        <div class="container-fluid">
-            <div class="navbar-header">
-                <a class="navbar-brand" href="/">Mapa da Segurança Pública do Rio de Janeiro</a>
-            </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="/dashboard/" class="dropdown-toggle" data-toggle="dropdown">Dashboad <span class="caret"></span></a>
-                        <ul class="dropdown-menu" role="menu">
-                            <li><a href="/chamados/">Chamados</a></li>
-                            <li><a href="/ocorrencias/">Ocorrências</a></li>
-                            <li><a href="/mapa/">Mapa</a></li>
-                            <li class="divider"></li>
-                            <li><a href="#">Teste</a></li>
-                            <li><a href="#">Teste</a></li>
-                        </ul>
-                    </li>
-                    <li><a href="#">Configurações</a></li>
-                    <li><a href="#">Ajuda</a></li>
-                    <li><a href="#">Sobre</a></li>
-                    <li><a href="#">Login</a></li>
-                </ul>
-                <form class="navbar-form navbar-right">
-                    <input type="text" class="form-control" placeholder="Search...">
-                </form>
-            </div>
-        </div>
+    <div class="boxes">
+        <header>
+            <h1>Mapa da Segurança Pública do Rio de Janeiro</h1>
+        </header>
     </div>
 
-    <div class="container-fluid">
-        <div class="row">
-     	        <div id="mapaleaf"></div>
-                <div id="carregando">Carregando...</div>
-        </div>
-    </div>
+    <div id="mapaleaf"></div>
+    <div id="carregando">Carregando...</div>
 
+    <footer>
+        <img src="images/emap_logo.png" height="48px" />
+        <img src="images/igarape_logo.png" height="48px" />
+    </footer>
     <script type = 'text/javascript' src="dist/js/build.js"></script>
-
-    <div class="footer">
-        <div class="container text-center">
-            <img  src="images/emap_logo.png" height="50px" align="middle">
-            <img  src="images/igarape_logo.png" height="50px" align="middle">
-        </div>
-    </div>
-
-
 </body>
 </html>

@@ -1,0 +1,71 @@
+#summary{
+  border: none;
+}
+
+#summary > div{
+  overflow-y: auto;
+  height: 20em;
+}
+
+#summary input[type=radio]{
+  display: none;
+}
+
+#summary label{
+  display: block;
+  overflow: hidden;
+  margin: .3em auto;
+  padding: 0 10px 0 25px;
+  max-width: 41em;
+  height: 2.5em;
+  -webkit-border-radius: 4px;
+     -moz-border-radius: 4px;
+          border-radius: 4px;
+  color: #fff;
+  text-decoration: none;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  letter-spacing: 2px;
+  font-weight: 700;
+  font-size: .6em;
+  font-family: 'PT Sans', sans-serif;
+  line-height: 2.5em;
+  cursor: pointer;
+  -webkit-transition: color 100ms ease-in;
+     -moz-transition: color 100ms ease-in;
+      -ms-transition: color 100ms ease-in;
+       -o-transition: color 100ms ease-in;
+          transition: color 100ms ease-in;
+}
+
+#summary input[type=radio] + label:hover span.bar{
+  background-color: rgba(255,255,255,1);
+  -webkit-transition: background-color 100ms ease-in;
+     -moz-transition: background-color 100ms ease-in;
+      -ms-transition: background-color 100ms ease-in;
+       -o-transition: background-color 100ms ease-in;
+          transition: background-color 100ms ease-in;
+}
+
+#summary input[type=radio] + label:hover{
+  color: rgba(255,255,255,1);
+}
+
+#summary input[type=radio]:checked + label{
+  background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAaCAYAAACgoey0AAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAX9JREFUeNpi+P//PwMNsS4QbwBiLnQ5WlqqAsRP/0PARiBmoYfFkkB8+z8qWALEjLS0mB+IL/3HDibSymJQXB7/jx/UgNSCvU4lwAbEG4DYkwi1WUxUspQZiOcRaSkIWOAKMk0Sg3jaf+IBOIVjMyQWiH8DsR+RljaTYOkBWJ5GNwRk2R+ooh9A7ETA0jwSLL0ATfEYqRpkyVc0xR+A2AyHpdFA/I9IS0F5WhRbAWIEtQQbeAXE6lhC5jeRlj4GYgVsRaYK1HBCmmWgmuyxhAwu8BpaXjNgs/gYkYbcAGIXPCGDDkCOM8eVPkCEFhE+JhX8BGJnfAkTxgC57BOVLAXlihBC2RA9Vf+k0FJQKk8nJv+jCwQi5WNyQAWxpR02wRQS8icy6CKlmMUlUUGipfOQK3lKLAbhdhIKfWZS6258kiAfzCZg6V4gZiOn0UBIAcgn63BYehK50Ke2xQxQH+3FUoqJUtJMIlYhLxAfxVJu09xiWENuMxCrUaNhCBBgAOAVfjALa5TLAAAAAElFTkSuQmCC);
+}
+
+#summary input[type=radio] + label{
+  background-position: 0 center;
+  background-size: 10px 8px;
+  background-repeat: no-repeat;
+  color: rgba(255,255,255,.5);
+}
+
+#summary input[type=radio] + label span.bar{
+  display: block;
+  min-height: 3px;
+  height: .3em;
+  background-color: #333;
+}
+
