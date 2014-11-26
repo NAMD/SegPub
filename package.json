@@ -4,9 +4,10 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "postinstall": "grunt copy:styles",
     "clean": "rm -vf static/data/segpub.csv*",
     "get-data": "node getData.js",
+    "postinstall": "grunt copy:styles",
+    "prestart": "grunt browserify",
     "test": "grunt mochaTest"
   },
   "repository": {
