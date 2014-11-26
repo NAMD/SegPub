@@ -33,5 +33,7 @@ https.get({
         fs.utimesSync(gzFile, mtime, mtime);
         console.log('Done.');
     });
+}).on('error', function(error){
+    console.error("Unreachable data:", error.code);
 });
 
