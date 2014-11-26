@@ -1,6 +1,7 @@
 var fs = require('fs'),
     path = require('path'),
     csv = require('csv'),
+    zlib = require('zlib'),
     express = require('express'),
     app = express(),
     filter  = require('./filter'),
@@ -25,10 +26,12 @@ file.pipe(parser)
 app.get('/incidents', function(req, res){
     var finalKind = req.query.finalKind || 'Roubo';
     res.set('Content-Type', 'text/csv');
+    res.set('Content-Encoding', 'gzip');
 
     csv.stringify(
         incidents.filter(filter.filterByKind(finalKind)),
         {delimiter: '|', header: true})
+    .pipe(zlib.createGzip())
     .pipe(res);
 });
 
