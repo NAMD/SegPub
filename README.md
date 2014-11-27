@@ -8,19 +8,13 @@ Second, install `grunt` globally in order to run frontend and test tasks:
 $ sudo npm install -g grunt
 ```
 
-After that, install node modules:
+After that, install node modules, download csv and start the app:
 
 ```bash
 $ npm install
-```
-
-To run the app, use the default `start` script:
-
-```bash
+$ npm run get-data
 $ npm start
 ```
-
-If the app couldn't find the csv data locally, it will be downloaded during the bootstrap. In this case, wait until the data is ready to use the app.
 
 Similarly, to run tests:
 

@@ -5,11 +5,8 @@ var fs = require('fs'),
     compression = require('compression'),
     app = express(),
     filter  = require('./filter'),
-    csvFile = path.join('static', 'data', 'segpub.csv');
-
-require('./getData');
-
-var incidents = [],
+    csvFile = path.join('static', 'data', 'segpub.csv'),
+    incidents = [],
     storeData = csv.transform([].push.bind(incidents));
 
 storeData.on('finish', function(){
