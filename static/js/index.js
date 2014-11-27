@@ -4,6 +4,7 @@ var L = require('leaflet'),
         attributionControl: false,
         zoomControl: false
     }).setView([-22.92,-43.22], 10),
+    cluster = new L.MarkerClusterGroup(),
     options = {
         fieldSeparator: '|',
         firstLineTitles: true,
@@ -32,6 +33,7 @@ require('leaflet-geocsv');
 require('leaflet.markercluster');
 
 L.tileLayer('http://b.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(mapa);
+mapa.addLayer(cluster);
 
 function plot(url){
     var carregando = document.getElementById('carregando'),
@@ -40,10 +42,9 @@ function plot(url){
     carregando.style.display = 'block';
 
     d3.text(url).get().on('load', function(csv) {
-        var cluster = new L.MarkerClusterGroup();
         ocorrencias.addData(csv);
+        cluster.clearLayers();
         cluster.addLayer(ocorrencias);
-        mapa.addLayer(cluster);
         mapa.fitBounds(cluster.getBounds());
         carregando.style.display = 'none';
     })

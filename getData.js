@@ -21,6 +21,7 @@ https.get({
 }).on('response', function(response){
     console.info('Status code: ', response.statusCode);
     if(response.statusCode === 200){
+        console.log('Receiving dozens of csv lines, please, be patient. :)');
         response.pipe(fs.createWriteStream(gzFile));
         response.pipe(zlib.createGunzip())
                 .pipe(fs.createWriteStream(csvFile));
@@ -33,5 +34,7 @@ https.get({
         fs.utimesSync(gzFile, mtime, mtime);
         console.log('Done.');
     });
+}).on('error', function(error){
+    console.error("Unreachable data:", error.code);
 });
 
