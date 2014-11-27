@@ -9,11 +9,12 @@ var L = require('leaflet'),
         fieldSeparator: '|',
         firstLineTitles: true,
         onEachFeature: function (feature, layer) {
-            var popup = '', title;
-            for (var indice in feature.properties) {
-                title = indice;
-                popup += '<b>'+title+'</b><br />'+feature.properties[indice]+'<br />';
-            }
+            var properties = feature.properties,
+                popup = 'Batalhão responsável: '.bold() + properties.batalho + '<br />' +
+                        'Despacho: '.bold() + properties.despacho + '<br />' +
+                        'Conclusão: '.bold() + properties.concluso + '<br />' +
+                         '<br />' +
+                         properties.observaes;
             layer.bindPopup(popup);
         },
         pointToLayer: function (feature, latlng) {
