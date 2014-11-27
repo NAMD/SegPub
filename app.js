@@ -9,6 +9,11 @@ var fs = require('fs'),
     incidents = [],
     storeData = csv.transform([].push.bind(incidents));
 
+if(!fs.existsSync(csvFile)){
+    console.error('No data found! You probably forgot to run `npm run get-data` to create the file: ', csvFile);
+    process.exit(8);
+}
+
 storeData.on('finish', function(){
     console.log('The incidents are in memory.');
 });
