@@ -4,7 +4,6 @@ var L = require('leaflet'),
         attributionControl: false,
         zoomControl: false
     }).setView([-22.92,-43.22], 10),
-    cluster = new L.MarkerClusterGroup(),
     options = {
         fieldSeparator: '|',
         firstLineTitles: true,
@@ -34,6 +33,7 @@ require('leaflet-geocsv');
 require('leaflet.markercluster');
 
 L.tileLayer('http://b.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(mapa);
+var cluster = new L.MarkerClusterGroup();
 mapa.addLayer(cluster);
 
 function plot(url){
