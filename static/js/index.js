@@ -37,17 +37,17 @@ var cluster = new L.MarkerClusterGroup();
 mapa.addLayer(cluster);
 
 function plot(url){
-    var carregando = document.getElementById('loading'),
+    var loading = document.getElementById('loading'),
         ocorrencias = L.geoCsv(null, options);
 
-    carregando.style.display = 'flex';
+    loading.style.display = 'flex';
 
     d3.text(url).get().on('load', function(csv) {
         ocorrencias.addData(csv);
         cluster.clearLayers();
         cluster.addLayer(ocorrencias);
         mapa.fitBounds(cluster.getBounds());
-        carregando.style.display = 'none';
+        loading.style.display = 'none';
     })
     .on('error', function(){
         alert('Não foi possível carregar os dados');
