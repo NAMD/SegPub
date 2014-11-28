@@ -37,10 +37,10 @@ var cluster = new L.MarkerClusterGroup();
 mapa.addLayer(cluster);
 
 function plot(url){
-    var carregando = document.getElementById('carregando'),
+    var carregando = document.getElementById('loading'),
         ocorrencias = L.geoCsv(null, options);
 
-    carregando.style.display = 'block';
+    carregando.style.display = 'flex';
 
     d3.text(url).get().on('load', function(csv) {
         ocorrencias.addData(csv);
