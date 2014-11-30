@@ -51,6 +51,7 @@ function plot(url){
     })
     .on('error', function(){
         alert('Não foi possível carregar os dados');
+        loading.style.display = 'none';
     });
 }
 
