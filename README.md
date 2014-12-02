@@ -6,6 +6,7 @@ Second, install `grunt` globally in order to run frontend and test tasks:
 
 ```bash
 $ sudo npm install -g grunt
+$ sudo npm install -g grunt-cli
 ```
 
 After that, install node modules, download csv and start the app:
