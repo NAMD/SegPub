@@ -20,10 +20,7 @@ var L = require('leaflet'),
             return L.marker(latlng, {
                 icon:L.icon({
                     iconUrl: '/images/chamado.png',
-                    shadowUrl: '/images/marker-shadow.png',
                     iconSize: [28,35],
-                    shadowSize:   [41, 41],
-                    shadowAnchor: [13, 20]
                 })
             });
         }
