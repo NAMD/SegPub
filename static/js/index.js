@@ -19,8 +19,8 @@ var L = require('leaflet'),
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {
                 icon:L.icon({
-                    iconUrl: '/images/chamado.png',
-                    iconSize: [28,35],
+                    iconUrl: '/images/iconmonstr-warning-2-icon.svg',
+                    iconSize: [30,30],
                 })
             });
         }
