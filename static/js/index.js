@@ -19,11 +19,8 @@ var L = require('leaflet'),
         pointToLayer: function (feature, latlng) {
             return L.marker(latlng, {
                 icon:L.icon({
-                    iconUrl: '/images/chamado.png',
-                    shadowUrl: '/images/marker-shadow.png',
-                    iconSize: [28,35],
-                    shadowSize:   [41, 41],
-                    shadowAnchor: [13, 20]
+                    iconUrl: '/images/iconmonstr-warning-2-icon.svg',
+                    iconSize: [30,30],
                 })
             });
         }
@@ -37,20 +34,21 @@ var cluster = new L.MarkerClusterGroup();
 mapa.addLayer(cluster);
 
 function plot(url){
-    var carregando = document.getElementById('carregando'),
+    var loading = document.getElementById('loading'),
         ocorrencias = L.geoCsv(null, options);
 
-    carregando.style.display = 'block';
+    loading.style.display = 'flex';
 
     d3.text(url).get().on('load', function(csv) {
         ocorrencias.addData(csv);
         cluster.clearLayers();
         cluster.addLayer(ocorrencias);
         mapa.fitBounds(cluster.getBounds());
-        carregando.style.display = 'none';
+        loading.style.display = 'none';
     })
     .on('error', function(){
         alert('Não foi possível carregar os dados');
+        loading.style.display = 'none';
     });
 }
 
