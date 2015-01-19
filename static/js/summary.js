@@ -1,4 +1,5 @@
-var d3 = require('d3');
+var d3 = require('d3'),
+    pt_BR = require('./locale').pt_BR;
 
 function slug(d){
     return d.key.split(' ').join('');
@@ -34,7 +35,7 @@ exports.summary = function(){
             .text(function(d){ return d.key;})
             .append('span')
             .attr('class', 'qty')
-            .text(function(d){ return d3.format('n')(d.value);});
+            .text(function(d){ return pt_BR.numberFormat('n')(d.value);});
         }
 
         return chart;
