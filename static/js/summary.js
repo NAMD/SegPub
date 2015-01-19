@@ -34,7 +34,7 @@ exports.summary = function(){
             .text(function(d){ return d.key;})
             .append('span')
             .attr('class', 'qty')
-            .text(function(d){ return d.value;});
+            .text(function(d){ return d3.format('n')(d.value);});
         }
 
         return chart;
