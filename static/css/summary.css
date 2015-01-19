@@ -15,7 +15,7 @@
   display: block;
   overflow: hidden;
   margin: .3em auto;
-  padding: 0 10px 0 25px;
+  padding: 0 0 0 25px;
   max-width: 41em;
   height: 2.5em;
   -webkit-border-radius: 4px;
@@ -60,6 +60,7 @@
   background-size: 10px 8px;
   background-repeat: no-repeat;
   color: rgba(255,255,255,.5);
+  position: relative;
 }
 
 #summary input[type=radio] + label span.bar{
@@ -69,3 +70,7 @@
   background-color: #333;
 }
 
+#summary input[type=radio] + label span.qty{
+    position: absolute;
+    right: 0;
+}

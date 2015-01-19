@@ -31,7 +31,10 @@ exports.summary = function(){
             .style('width', function(d){
                 return ((d.value / max) * 100) + '%';
             })
-            .text(function(d){ return d.key;});
+            .text(function(d){ return d.key;})
+            .append('span')
+            .attr('class', 'qty')
+            .text(function(d){ return d.value;});
         }
 
         return chart;
