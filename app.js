@@ -36,14 +36,21 @@ app.get('/incidents', function(req, res){
     .pipe(res);
 });
 
-app.get('/incidents/summary', function(req, res){
-    var summary = incidents.reduce(function(summary, curr){
-        var finalKind = curr['Descrição Natureza Final'];
-        summary[finalKind] |= 0;
-        summary[finalKind]++;
+function summarizeBy(key){
+    return function(summary, curr){
+        var _key = key(curr);
+        summary[_key] |= 0;
+        summary[_key]++;
         return summary;
-    }, {});
-    res.json(summary);
+    };
+}
+
+app.get('/incidents/summary', function(req, res){
+    var summarization = summarizeBy(function(incident){
+        return incident['Descrição Natureza Final'];
+    });
+
+    res.json(incidents.reduce(summarization, {}));
 });
 
 exports.app = app;
