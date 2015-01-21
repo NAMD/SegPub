@@ -55,6 +55,8 @@ function plot(url){
 
 d3.json('/incidents/summary', function(json){
     d3.select('div.boxes')
+        .append('div')
+        .attr('id', 'summary')
         .datum(json)
         .call(summary())
         .selectAll('input')

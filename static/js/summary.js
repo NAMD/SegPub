@@ -12,8 +12,6 @@ exports.summary = function(){
         }),
         max = d3.max(data, function(d){ return d.value;}),
         summary = container.append('div')
-                    .attr('id', 'summary')
-                    .append('div')
                     .selectAll('div')
                     .data(data)
                     .enter()
