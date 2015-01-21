@@ -45,21 +45,19 @@ function summarizeBy(key){
     };
 }
 
-app.get('/incidents/summary', function(req, res){
-    var summarization = summarizeBy(function(incident){
-        return incident['Descrição Natureza Final'];
-    });
+function summary(cb){
+    return function (req, res, next){
+        res.json(incidents.reduce(summarizeBy(cb), {}));
+    };
+}
 
-    res.json(incidents.reduce(summarization, {}));
-});
+app.get('/incidents/summary', summary(function(incident){
+    return incident['Descrição Natureza Final'];
+}));
 
-app.get('/incidents/summary/date', function(req, res){
-    var summarization = summarizeBy(function(incident){
-        var date = incident['Inicio Atendimento'].slice(0, 10);
-        return date;
-    });
-
-    res.json(incidents.reduce(summarization, {}));
-});
+app.get('/incidents/summary/date', summary(function(incident){
+    var date = incident['Inicio Atendimento'].slice(0, 10);
+    return date;
+}));
 
 exports.app = app;
