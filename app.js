@@ -53,4 +53,13 @@ app.get('/incidents/summary', function(req, res){
     res.json(incidents.reduce(summarization, {}));
 });
 
+app.get('/incidents/summary/date', function(req, res){
+    var summarization = summarizeBy(function(incident){
+        var date = incident['Inicio Atendimento'].slice(0, 10);
+        return date;
+    });
+
+    res.json(incidents.reduce(summarization, {}));
+});
+
 exports.app = app;
