@@ -1,6 +1,7 @@
 var L = require('leaflet'),
     d3 = require('d3'),
     summary = require('./summary').summary,
+    byDate = require('./byDate').byDate,
     mapa = L.map('mapaleaf', {
         attributionControl: false,
         zoomControl: false
@@ -63,5 +64,13 @@ d3.json('/incidents/summary', function(json){
         .on('change', function(value){
             plot('/incidents?finalKind=' + value.key);
         });
+});
+
+d3.json('/incidents/summary/date', function(json){
+    d3.select('div.boxes')
+        .append('div')
+        .attr('id', 'by-date')
+        .datum(json)
+        .call(byDate());
 });
 
