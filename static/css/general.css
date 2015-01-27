@@ -88,3 +88,7 @@ footer img{
 #by-date svg rect{
     fill: #fff;
 }
+
+#by-date text{
+    fill: #fff;
+}
