@@ -93,3 +93,7 @@ footer img{
     font-size: .5em;
     fill: #fff;
 }
+
+#by-date .x.axis path.domain{
+    display: none;
+}
