@@ -89,6 +89,7 @@ footer img{
     fill: #fff;
 }
 
-#by-date text{
+#by-date .x.axis text{
+    font-size: .5em;
     fill: #fff;
 }
