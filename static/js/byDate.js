@@ -20,7 +20,10 @@ exports.byDate = function(){
                 return d.getDate();
             });
 
-        svg.selectAll('rect')
+        svg
+            .append('g')
+            .attr('class', 'bars')
+            .selectAll('rect')
             .data(data)
             .enter()
             .append('rect')
