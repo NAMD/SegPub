@@ -10,7 +10,7 @@ exports.byDate = function(){
             data = d3.entries(container.datum()),
             height = 150,
             daysDomain = d3.time.days.apply(this, d3.extent(data, date)),
-            x = d3.scale.ordinal().domain(daysDomain).rangeBands([0, 368], 0.5, 1),
+            x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, 386], 0.25, 2),
             y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height, 0]),
             xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(function(d){
                 return d.getDate();
