@@ -5,6 +5,7 @@ var fs = require('fs'),
     compression = require('compression'),
     app = express(),
     filter  = require('./filter'),
+    summary = require('./summary').summary,
     csvFile = path.join('static', 'data', 'segpub.csv'),
     incidents = [],
     storeData = csv.transform([].push.bind(incidents));
@@ -36,14 +37,13 @@ app.get('/incidents', function(req, res){
     .pipe(res);
 });
 
-app.get('/incidents/summary', function(req, res){
-    var summary = incidents.reduce(function(summary, curr){
-        var finalKind = curr['Descrição Natureza Final'];
-        summary[finalKind] |= 0;
-        summary[finalKind]++;
-        return summary;
-    }, {});
-    res.json(summary);
-});
+app.get('/incidents/summary', summary(incidents, function(incident){
+    return incident['Descrição Natureza Final'];
+}));
+
+app.get('/incidents/summary/date', summary(incidents, function(incident){
+    var date = incident['Inicio Atendimento'].slice(0, 10);
+    return date;
+}));
 
 exports.app = app;
