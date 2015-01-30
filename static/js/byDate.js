@@ -10,19 +10,26 @@ function plusOneDay(date){
 
 exports.byDate = function(){
     return function(container){
-        var svg = container.append('svg'),
-            data = d3.entries(container.datum()),
-            height = 150,
+        var data = d3.entries(container.datum()),
+            width = 400,
+            height = 100,
+            marginTop = 20,
             daysInterval = d3.time.days(d3.min(data, date), plusOneDay(d3.max(data, date))),
-            x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, 386], 0.25, 2),
-            y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height, 0]),
-            xAxis = d3.svg.axis().scale(x).orient("bottom").tickFormat(function(d){
+            x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, width], 0.25, 2),
+            y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height - marginTop, 0]),
+            xAxis = d3.svg.axis().scale(x).tickFormat(function(d){
                 return d.getDate();
-            });
+            }),
+            svg = container.append('svg')
+                .attr('viewBox', '0 0 ' + width + ' ' + height)
+                .attr('preserveAspectRatio', 'xMidYMid meet')
+                .attr('width', '100%');
+
 
         svg
             .append('g')
             .attr('class', 'bars')
+            .attr('transform', 'translate(0, ' + marginTop + ')')
             .selectAll('rect')
             .data(data)
             .enter()
