@@ -1,4 +1,4 @@
-var d3 = require('d3'), 
+var d3 = require('d3'),
     timeParser = d3.time.format('%d/%m/%Y');
 
 function value(d){ return d.value; }
