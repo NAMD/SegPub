@@ -85,12 +85,16 @@ footer img{
     width: 100%;
 }
 
-#by-date svg rect{
-    fill: #fff;
-}
-
 #by-date .x.axis text{
     font-size: .5em;
+    fill: #333;
+}
+
+#by-date svg rect{
+    fill: #333;
+}
+
+#by-date svg rect:hover{
     fill: #fff;
 }
 
