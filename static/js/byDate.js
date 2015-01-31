@@ -18,7 +18,14 @@ exports.byDate = function(){
             x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, width], 0.25, 2),
             y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height - marginTop, 0]),
             xAxis = d3.svg.axis().scale(x).tickFormat(function(d){
-                return d.getDate();
+                var day = d.getDate();
+                if(day === 15){
+                    d3.select(this)
+                        .append('tspan')
+                        .attr('dy', '-1em')
+                        .text(d3.time.format('%m')(d));
+                }
+                return day;
             }),
             svg = container.append('svg')
                 .attr('viewBox', '0 0 ' + width + ' ' + height)
