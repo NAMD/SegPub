@@ -4,8 +4,7 @@ var d3 = require('d3'),
 function value(d){ return d.value; }
 function date(d){ return timeParser.parse(d.key); }
 function plusOneDay(date){
-    var oneDay = 86400000;
-    return new Date(date.getTime() + oneDay);
+    return new Date(date).setDate(date.getDate() + 1);
 }
 
 exports.byDate = function(){
