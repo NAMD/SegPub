@@ -21,20 +21,12 @@ exports.byDate = function(){
             x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, width], 0.25, 2),
             y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height - marginTop, 0]),
             xAxis = d3.svg.axis().scale(x).tickFormat(function(d){
-                var day = d.getDate();
-                if(day === 15){
-                    d3.select(this)
-                        .append('tspan')
-                        .attr('dy', '-1em')
-                        .text(d3.time.format('%m')(d));
-                }
-                return day;
+                return d.getDate();
             }),
             svg = container.append('svg')
                 .attr('viewBox', '0 0 ' + width + ' ' + height)
                 .attr('preserveAspectRatio', 'xMidYMid meet')
                 .attr('width', '100%');
-
 
         svg
             .append('g')
@@ -57,7 +49,19 @@ exports.byDate = function(){
 
         svg.append("g")
             .attr("class", "x axis")
-            .call(xAxis);
+            .call(xAxis)
+            .append('g')
+                .attr('class', 'months')
+                .selectAll('text')
+                .data(monthsInterval)
+                .enter()
+                .append('text')
+                .attr('y', 0)
+                .attr('x', function(d){
+                    d.setDate(15);
+                    return x(d);
+                })
+                .text(d3.time.format('%B'));
 
     };
 };
