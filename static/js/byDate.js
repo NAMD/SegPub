@@ -3,6 +3,11 @@ var d3 = require('d3'),
 
 function value(d){ return d.value; }
 function date(d){ return timeParser.parse(d.key); }
+function setDay15(d){
+    d = new Date(d);
+    d.setDate(15);
+    return d;
+}
 function plusOneDay(date){
     return new Date(date).setDate(date.getDate() + 1);
 }
@@ -20,9 +25,6 @@ exports.byDate = function(){
             monthsInterval = d3.time.months(d3.min(data, date), plusOneMonth(d3.max(data, date))),
             x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, width], 0.25, 2),
             y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height, marginTop]),
-            xAxis = d3.svg.axis().scale(x).tickFormat(function(d){
-                return d.getDate();
-            }),
             svg = container.append('svg')
                 .attr('viewBox', '0 0 ' + width + ' ' + height)
                 .attr('preserveAspectRatio', 'xMidYMid meet')
@@ -46,21 +48,27 @@ exports.byDate = function(){
                 return height - y(value(d));
             });
 
-        svg.append("g")
+        var xAxisGroup = svg.append("g")
             .attr("class", "x axis")
-            .call(xAxis)
-            .append('g')
-                .attr('class', 'months')
-                .selectAll('text')
-                .data(monthsInterval)
-                .enter()
-                .append('text')
-                .attr('y', 0)
-                .attr('x', function(d){
-                    d.setDate(15);
-                    return x(d);
-                })
-                .text(d3.time.format('%B'));
+            .attr('transform', 'translate(0, 10)');
+
+        xAxisGroup.append('g').attr('class', 'months')
+            .selectAll('text')
+            .data(monthsInterval.map(setDay15))
+            .enter()
+            .append('text')
+            .style('text-anchor', 'middle')
+            .attr('x', function(d){console.log(d); return x(d);})
+            .text(d3.time.format('%B'));
+
+        xAxisGroup.append('g').attr("class", "days")
+            .selectAll('text')
+            .data(daysInterval)
+            .enter()
+            .append('text')
+            .attr('y', 10)
+            .attr('x', x)
+            .text(d3.time.format('%d'));
 
     };
 };
