@@ -11,9 +11,6 @@ function setDay15(d){
 function plusOneDay(date){
     return new Date(date).setDate(date.getDate() + 1);
 }
-function plusOneMonth(date){
-    return new Date(date).setMonth(date.getMonth() + 1);
-}
 
 exports.byDate = function(){
     return function(container){
@@ -22,7 +19,7 @@ exports.byDate = function(){
             height = 100,
             marginTop = 25,
             daysInterval = d3.time.days(d3.min(data, date), plusOneDay(d3.max(data, date))),
-            monthsInterval = d3.time.months(d3.min(data, date), plusOneMonth(d3.max(data, date))),
+            monthsInterval = d3.time.months(d3.min(data, date), d3.max(data, date)),
             x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, width], 0.25, 2),
             y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height, marginTop]),
             svg = container.append('svg')
