@@ -15,11 +15,11 @@ exports.byDate = function(){
         var data = d3.entries(container.datum()),
             width = 400,
             height = 100,
-            marginTop = 20,
+            marginTop = 25,
             daysInterval = d3.time.days(d3.min(data, date), plusOneDay(d3.max(data, date))),
             monthsInterval = d3.time.months(d3.min(data, date), plusOneMonth(d3.max(data, date))),
             x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, width], 0.25, 2),
-            y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height - marginTop, 0]),
+            y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height, marginTop]),
             xAxis = d3.svg.axis().scale(x).tickFormat(function(d){
                 return d.getDate();
             }),
@@ -31,7 +31,6 @@ exports.byDate = function(){
         svg
             .append('g')
             .attr('class', 'bars')
-            .attr('transform', 'translate(0, ' + marginTop + ')')
             .selectAll('rect')
             .data(data)
             .enter()
