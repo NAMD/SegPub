@@ -101,3 +101,7 @@ footer img{
 #by-date .x.axis path.domain{
     display: none;
 }
+
+#by-date g.bars rect{
+    cursor: pointer;
+}
