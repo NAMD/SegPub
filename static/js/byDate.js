@@ -55,7 +55,7 @@ exports.byDate = function(){
             .enter()
             .append('text')
             .style('text-anchor', 'middle')
-            .attr('x', function(d){console.log(d); return x(d);})
+            .attr('x', x)
             .text(d3.time.format('%B'));
 
         xAxisGroup.append('g').attr("class", "days")
