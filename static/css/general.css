@@ -106,3 +106,10 @@ footer img{
 #by-date g.bars rect{
     cursor: pointer;
 }
+
+#by-date .brush rect.extent {
+    stroke: #fff;
+    fill-opacity: .5;
+    fill: #AAA;
+    shape-rendering: crispEdges;
+}

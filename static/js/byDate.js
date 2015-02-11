@@ -71,5 +71,16 @@ exports.byDate = function(){
             .attr('x', x)
             .text(d3.time.format('%d'));
 
+        var brush = d3.svg.brush().x(x).on("brush", function (){
+            console.log(brush.extent());
+        });
+
+        svg.append("g")
+            .attr("class", "x brush")
+            .call(brush)
+            .selectAll("rect")
+            .attr("y", -6)
+            .attr("height", height + 7);
+
     };
 };
