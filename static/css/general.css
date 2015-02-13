@@ -113,3 +113,10 @@ footer img{
     fill: #AAA;
     shape-rendering: crispEdges;
 }
+
+#by-date .x.axis text{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
