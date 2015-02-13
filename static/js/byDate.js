@@ -25,29 +25,27 @@ exports.byDate = function(){
             svg = container.append('svg')
                 .attr('viewBox', '0 0 ' + width + ' ' + height)
                 .attr('preserveAspectRatio', 'xMidYMid meet')
-                .attr('width', '100%');
-
-        svg
-            .append('g')
-            .attr('class', 'bars')
-            .selectAll('rect')
-            .data(data)
-            .enter()
-            .append('rect')
-            .on('click', function(d){
-                var bar = d3.select(this);
-                bar.classed('active', !bar.classed('active'));
-            })
-            .attr('x', function(d){
-                return x(date(d));
-            })
-            .attr('y', function(d){
-                return y(value(d));
-            })
-            .attr('width', x.rangeBand())
-            .attr('height', function(d){
-                return height - y(value(d));
-            });
+                .attr('width', '100%'),
+            bars = svg.append('g')
+                .attr('class', 'bars')
+                .selectAll('rect')
+                .data(data)
+                .enter()
+                .append('rect')
+                .on('click', function(d){
+                    var bar = d3.select(this);
+                    bar.classed('active', !bar.classed('active'));
+                })
+                .attr('x', function(d){
+                    return x(date(d));
+                })
+                .attr('y', function(d){
+                    return y(value(d));
+                })
+                .attr('width', x.rangeBand())
+                .attr('height', function(d){
+                    return height - y(value(d));
+                });
 
         var xAxisGroup = svg.append("g")
             .attr("class", "x axis")
@@ -72,7 +70,11 @@ exports.byDate = function(){
             .text(d3.time.format('%d'));
 
         var brush = d3.svg.brush().x(x).on("brush", function (){
-            console.log(brush.extent());
+            var e = brush.extent();
+            bars.classed('active', function(d){
+                var v = x(date(d));
+                return e[0] <= v && v <= e[1];
+            });
         });
 
         svg.append("g")
