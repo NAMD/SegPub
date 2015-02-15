@@ -73,7 +73,7 @@ exports.byDate = function(){
             var e = brush.extent();
             bars.classed('active', function(d){
                 var v = x(date(d));
-                return e[0] <= v && v <= e[1];
+                return e[0] <= (v + x.rangeBand()) && v <= e[1];
             });
         });
 
