@@ -32,10 +32,6 @@ exports.byDate = function(){
                 .data(data)
                 .enter()
                 .append('rect')
-                .on('click', function(d){
-                    var bar = d3.select(this);
-                    bar.classed('active', !bar.classed('active'));
-                })
                 .attr('x', function(d){
                     return x(date(d));
                 })

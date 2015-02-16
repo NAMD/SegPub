@@ -94,8 +94,7 @@ footer img{
     fill: #333;
 }
 
-#by-date svg rect.active,
-#by-date svg rect:hover{
+#by-date svg rect.active{
     fill: #fff;
 }
 
