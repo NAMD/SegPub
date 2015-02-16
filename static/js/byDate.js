@@ -11,6 +11,9 @@ function setDay15(d){
 function plusOneDay(date){
     return new Date(date).setDate(date.getDate() + 1);
 }
+function isIn(range, width, value){
+    return range[0] <= (value + width) && value <= range[1];
+}
 
 exports.byDate = function(){
     return function(container){
@@ -66,14 +69,12 @@ exports.byDate = function(){
             .text(d3.time.format('%d'));
 
         var brush = d3.svg.brush().x(x).on("brush", function (){
-            var e = brush.extent();
+            var _isIn = isIn.bind(this, brush.extent(), x.rangeBand())
             days.classed('active', function(d){
-                var v = x(d);
-                return e[0] <= (v + x.rangeBand()) && v <= e[1];
+                return _isIn(x(d));
             });
             bars.classed('active', function(d){
-                var v = x(date(d));
-                return e[0] <= (v + x.rangeBand()) && v <= e[1];
+                return _isIn(x(date(d)));
             });
         });
 
