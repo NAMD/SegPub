@@ -56,7 +56,7 @@ exports.byDate = function(){
             .attr('x', x)
             .text(d3.time.format('%B'));
 
-        xAxisGroup.append('g').attr("class", "days")
+        var days = xAxisGroup.append('g').attr("class", "days")
             .selectAll('text')
             .data(daysInterval)
             .enter()
@@ -67,6 +67,10 @@ exports.byDate = function(){
 
         var brush = d3.svg.brush().x(x).on("brush", function (){
             var e = brush.extent();
+            days.classed('active', function(d){
+                var v = x(d);
+                return e[0] <= (v + x.rangeBand()) && v <= e[1];
+            });
             bars.classed('active', function(d){
                 var v = x(date(d));
                 return e[0] <= (v + x.rangeBand()) && v <= e[1];

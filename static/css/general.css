@@ -94,6 +94,7 @@ footer img{
     fill: #333;
 }
 
+#by-date svg .x.axis text.active,
 #by-date svg rect.active{
     fill: #fff;
 }
