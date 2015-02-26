@@ -69,13 +69,9 @@ exports.byDate = function(){
             .text(d3.time.format('%d'));
 
         var brush = d3.svg.brush().x(x).on("brush", function (){
-            var _isIn = isIn.bind(this, brush.extent(), x.rangeBand())
-            days.classed('active', function(d){
-                return _isIn(x(d));
-            });
-            bars.classed('active', function(d){
-                return _isIn(x(date(d)));
-            });
+            var _isIn = isIn.bind(this, brush.extent(), x.rangeBand());
+            days.classed('active', function(d){ return _isIn(x(d)); });
+            bars.classed('active', function(d){ return _isIn(x(date(d))); });
         });
 
         svg.append("g")
