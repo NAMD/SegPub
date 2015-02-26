@@ -3,10 +3,12 @@ var d3 = require('d3'),
 
 function value(d){ return d.value; }
 function date(d){ return timeParser.parse(d.key); }
-function setDay15(d){
-    d = new Date(d);
-    d.setDate(15);
-    return d;
+function day(d){
+    return function(date){
+        date = new Date(date);
+        date.setDate(d);
+        return date;
+    };
 }
 function plusOneDay(date){
     return new Date(date).setDate(date.getDate() + 1);
@@ -52,7 +54,7 @@ exports.byDate = function(){
 
         xAxisGroup.append('g').attr('class', 'months')
             .selectAll('text')
-            .data(monthsInterval.map(setDay15))
+            .data(monthsInterval.map(day(15)))
             .enter()
             .append('text')
             .style('text-anchor', 'middle')
