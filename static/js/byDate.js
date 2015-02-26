@@ -71,9 +71,17 @@ exports.byDate = function(){
             .text(d3.time.format('%d'));
 
         var brush = d3.svg.brush().x(x).on("brush", function (){
-            var _isIn = isIn.bind(this, brush.extent(), x.rangeBand());
-            days.classed('active', function(d){ return _isIn(x(d)); });
-            bars.classed('active', function(d){ return _isIn(x(date(d))); });
+            var isInBrush = isIn.bind(this, brush.extent()),
+                isInDay = isInBrush.bind(this, x.rangeBand());
+            days.classed('active', function(d){ return isInDay(x(d)); });
+            bars.classed('active', function(d){ return isInDay(x(date(d))); });
+            xAxisGroup.selectAll('.months text')
+                .classed('active', function(d){
+                    var firstDay = day(1)(d),
+                        incMonth = function(d){ return day(0)(day(32)(d)); },
+                        lastDay = incMonth(d);
+                    return isInBrush(x(lastDay) - x(firstDay), x(firstDay));
+                });
         });
 
         svg.append("g")
