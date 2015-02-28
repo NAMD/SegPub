@@ -46,43 +46,43 @@ exports.byDate = function(){
                 .attr('width', x.rangeBand())
                 .attr('height', function(d){
                     return height - y(value(d));
-                });
+                }),
 
-        var xAxisGroup = svg.append("g")
-            .attr("class", "x axis")
-            .attr('transform', 'translate(0, 10)');
+            xAxisGroup = svg.append("g")
+                .attr("class", "x axis")
+                .attr('transform', 'translate(0, 10)'),
 
-        xAxisGroup.append('g').attr('class', 'months')
-            .selectAll('text')
-            .data(monthsInterval.map(day(15)))
-            .enter()
-            .append('text')
-            .style('text-anchor', 'middle')
-            .attr('x', x)
-            .text(d3.time.format('%B'));
+            months = xAxisGroup.append('g').attr('class', 'months')
+                .selectAll('text')
+                .data(monthsInterval.map(day(15)))
+                .enter()
+                .append('text')
+                .style('text-anchor', 'middle')
+                .attr('x', x)
+                .text(d3.time.format('%B')),
 
-        var days = xAxisGroup.append('g').attr("class", "days")
-            .selectAll('text')
-            .data(daysInterval)
-            .enter()
-            .append('text')
-            .attr('y', 10)
-            .attr('x', x)
-            .text(d3.time.format('%d'));
+            days = xAxisGroup.append('g').attr("class", "days")
+                .selectAll('text')
+                .data(daysInterval)
+                .enter()
+                .append('text')
+                .attr('y', 10)
+                .attr('x', x)
+                .text(d3.time.format('%d')),
 
-        var brush = d3.svg.brush().x(x).on("brush", function (){
-            var isInBrush = isIn.bind(this, brush.extent()),
-                isInDay = isInBrush.bind(this, x.rangeBand());
-            days.classed('active', function(d){ return isInDay(x(d)); });
-            bars.classed('active', function(d){ return isInDay(x(date(d))); });
-            xAxisGroup.selectAll('.months text')
-                .classed('active', function(d){
-                    var firstDay = day(1)(d),
-                        incMonth = function(d){ return day(0)(day(32)(d)); },
-                        lastDay = incMonth(d);
-                    return isInBrush(x(lastDay) - x(firstDay), x(firstDay));
-                });
-        });
+            brush = d3.svg.brush().x(x).on("brush", function (){
+                var isInBrush = isIn.bind(this, brush.extent()),
+                    isInDay = isInBrush.bind(this, x.rangeBand());
+                days.classed('active', function(d){ return isInDay(x(d)); });
+                bars.classed('active', function(d){ return isInDay(x(date(d))); });
+                xAxisGroup.selectAll('.months text')
+                    .classed('active', function(d){
+                        var firstDay = day(1)(d),
+                            incMonth = function(d){ return day(0)(day(32)(d)); },
+                            lastDay = incMonth(d);
+                        return isInBrush(x(lastDay) - x(firstDay), x(firstDay));
+                    });
+            });
 
         svg.append("g")
             .attr("class", "x brush")
