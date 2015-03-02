@@ -87,8 +87,8 @@ exports.byDate = function(){
             .attr("class", "x brush")
             .call(brush)
             .selectAll("rect")
-            .attr("y", -6)
-            .attr("height", height + 7);
+            .attr("y", y.range()[1])
+            .attr("height", y.range()[0]);
 
     };
 };
