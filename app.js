@@ -28,11 +28,25 @@ file.pipe(parser)
 
 app.use(compression());
 
+function parseDate(dateString){
+    var split = dateString.split('/');
+    return new Date(split.reverse().join('-'));
+}
+
 app.get('/incidents', function(req, res){
     var finalKind = req.query.finalKind || 'Roubo';
+
     res.set('Content-Type', 'text/csv');
     csv.stringify(
-        incidents.filter(filter.filterByKind(finalKind)),
+        incidents.filter(filter.filterByKind(finalKind))
+                 .filter(function(incident){
+                     if(req.query.from){
+                         var date = parseDate(incident['Inicio Atendimento'].slice(0, 10));
+                         return date >= new Date(req.query.from);
+                     }else{
+                         return true;
+                     }
+                 }),
         {delimiter: '|', header: true})
     .pipe(res);
 });
