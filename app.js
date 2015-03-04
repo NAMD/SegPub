@@ -40,12 +40,16 @@ app.get('/incidents', function(req, res){
     csv.stringify(
         incidents.filter(filter.filterByKind(finalKind))
                  .filter(function(incident){
+                     // TODO: Refactoring needed.
+                     var date = parseDate(incident['Inicio Atendimento'].slice(0, 10)),
+                         show = true;
                      if(req.query.from){
-                         var date = parseDate(incident['Inicio Atendimento'].slice(0, 10));
-                         return date >= new Date(req.query.from);
-                     }else{
-                         return true;
+                         show = show && date >= new Date(req.query.from);
                      }
+                     if(req.query.to){
+                         show = show && date <= new Date(req.query.to);
+                     }
+                     return show;
                  }),
         {delimiter: '|', header: true})
     .pipe(res);
