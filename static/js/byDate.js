@@ -18,7 +18,9 @@ function isIn(range, width, value){
 }
 
 exports.byDate = function(){
-    return function(container){
+    var brush = d3.svg.brush();
+
+    function chart(container){
         var data = d3.entries(container.datum()),
             width = 400,
             height = 100,
@@ -65,20 +67,20 @@ exports.byDate = function(){
                 .append('text')
                 .attr('y', 10)
                 .attr('x', x)
-                .text(d3.time.format('%d')),
+                .text(d3.time.format('%d'));
 
-            brush = d3.svg.brush().x(x).on("brush", function (){
-                var isInBrush = isIn.bind(this, brush.extent()),
-                    isInDay = isInBrush.bind(this, x.rangeBand());
-                days.classed('active', function(d){ return isInDay(x(d)); });
-                bars.classed('active', function(d){ return isInDay(x(date(d))); });
-                months.classed('active', function(d){
-                    var firstDay = day(1)(d),
-                        incMonth = function(d){ return day(0)(day(32)(d)); },
-                        lastDay = incMonth(d);
-                    return isInBrush(x(lastDay) - x(firstDay), x(firstDay));
-                });
+        brush.x(x).on("brush", function (){
+            var isInBrush = isIn.bind(this, brush.extent()),
+                isInDay = isInBrush.bind(this, x.rangeBand());
+            days.classed('active', function(d){ return isInDay(x(d)); });
+            bars.classed('active', function(d){ return isInDay(x(date(d))); });
+            months.classed('active', function(d){
+                var firstDay = day(1)(d),
+                    incMonth = function(d){ return day(0)(day(32)(d)); },
+                    lastDay = incMonth(d);
+                return isInBrush(x(lastDay) - x(firstDay), x(firstDay));
             });
+        });
 
         svg.append("g")
             .attr("class", "x brush")
@@ -86,6 +88,7 @@ exports.byDate = function(){
             .selectAll("rect")
             .attr("y", y.range()[1])
             .attr("height", y.range()[0]);
-
-    };
+    }
+    chart.brush = brush;
+    return chart;
 };
