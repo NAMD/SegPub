@@ -40,7 +40,7 @@ app.get('/incidents', function(req, res){
     csv.stringify(
         incidents.filter(filter.filterByKind(finalKind))
                  .filter(function(incident){
-                     // TODO: Refactoring needed.
+                     // TODO: Refactoring and test covering are needed.
                      var date = parseDate(incident['Inicio Atendimento'].slice(0, 10)),
                          show = true;
                      if(req.query.from){

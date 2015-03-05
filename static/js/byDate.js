@@ -47,11 +47,9 @@ exports.byDate = function(){
                 .attr('height', function(d){
                     return height - y(value(d));
                 }),
-
             xAxisGroup = svg.append("g")
                 .attr("class", "x axis")
                 .attr('transform', 'translate(0, 10)'),
-
             months = xAxisGroup.append('g').attr('class', 'months')
                 .selectAll('text')
                 .data(monthsInterval.map(day(15)))
@@ -60,7 +58,6 @@ exports.byDate = function(){
                 .style('text-anchor', 'middle')
                 .attr('x', x)
                 .text(d3.time.format('%B')),
-
             days = xAxisGroup.append('g').attr("class", "days")
                 .selectAll('text')
                 .data(daysInterval)
