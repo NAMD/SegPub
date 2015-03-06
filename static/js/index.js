@@ -67,9 +67,7 @@ d3.json('/incidents/summary', function(json){
 });
 
 d3.json('/incidents/summary/date', function(json){
-    d3.select('div.boxes')
-        .append('div')
-        .attr('id', 'by-date')
+    d3.select('div.boxes div#by-date')
         .datum(json)
         .call(byDate());
 });
