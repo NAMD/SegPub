@@ -69,9 +69,14 @@ exports.byDate = function(){
                 .attr('x', x)
                 .text(d3.time.format('%d'));
 
+        function isInBrush(width, value){
+            return isIn(brush.extent(), width, value);
+        }
+        function isInDay(value){
+            return isInBrush(x.rangeBand(), value);
+        }
+
         brush.x(x).on("brush", function (){
-            var isInBrush = isIn.bind(this, brush.extent()),
-                isInDay = isInBrush.bind(this, x.rangeBand());
             days.classed('active', function(d){ return isInDay(x(d)); });
             bars.classed('active', function(d){ return isInDay(x(date(d))); });
             months.classed('active', function(d){
@@ -81,6 +86,13 @@ exports.byDate = function(){
                 return isInBrush(x(lastDay) - x(firstDay), x(firstDay));
             });
         });
+        brush.x(x).on("brushend", function (){
+            var selectedData = data.filter(function(d){
+                return isInDay(x(date(d)));
+            });
+            chart.onSelect(selectedData);
+        });
+
 
         svg.append("g")
             .attr("class", "x brush")
@@ -89,6 +101,8 @@ exports.byDate = function(){
             .attr("y", y.range()[1])
             .attr("height", y.range()[0]);
     }
-    chart.brush = brush;
+
+    chart.onSelect = function(data){ console.log(data);};
+
     return chart;
 };
