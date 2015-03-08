@@ -24,11 +24,12 @@ exports.byDate = function(){
 
     function chart(container){
         var data = d3.entries(container.datum()),
+            dateExtent = d3.extent(data, date),
             width = 400,
             height = 100,
             marginTop = 25,
             daysInterval = d3.time.days(d3.min(data, date), plusOneDay(d3.max(data, date))),
-            monthsInterval = d3.time.months(d3.min(data, date), d3.max(data, date)),
+            monthsInterval = d3.time.months(dateExtent),
             x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, width], 0.25, 2),
             y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height, marginTop]),
             svg = container.append('svg')
