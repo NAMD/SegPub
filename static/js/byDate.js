@@ -1,5 +1,5 @@
 var d3 = require('d3'),
-    timeParser = d3.time.format('%d/%m/%Y');
+    timeParser = d3.time.format('%Y-%m-%d');
 
 function value(d){ return d.value; }
 function date(d){ return timeParser.parse(d.key); }
@@ -28,8 +28,8 @@ exports.byDate = function(){
             width = 400,
             height = 100,
             marginTop = 25,
-            daysInterval = d3.time.days(d3.min(data, date), plusOneDay(d3.max(data, date))),
-            monthsInterval = d3.time.months(dateExtent),
+            daysInterval = d3.time.days(dateExtent[0], plusOneDay(dateExtent[1])),
+            monthsInterval = d3.time.months(dateExtent[0], dateExtent[1]),
             x = d3.scale.ordinal().domain(daysInterval).rangeBands([0, width], 0.25, 2),
             y = d3.scale.linear().domain([0, d3.max(data.map(value))]).range([height, marginTop]),
             svg = container.append('svg')

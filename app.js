@@ -60,8 +60,8 @@ app.get('/incidents/summary', summary(incidents, function(incident){
 }));
 
 app.get('/incidents/summary/date', summary(incidents, function(incident){
-    var date = incident['Inicio Atendimento'].slice(0, 10);
-    return date;
+    var date = parseDate(incident['Inicio Atendimento'].slice(0, 10));
+    return date.toISOString().slice(0,10);
 }));
 
 exports.app = app;
