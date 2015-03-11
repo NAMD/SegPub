@@ -54,6 +54,14 @@ function plot(url){
     });
 }
 
+var dateChart = byDate();
+var finalKind;
+dateChart.onSelect = function(data){
+    plot('/incidents?finalKind=' + finalKind +
+                   '&from=' + data[0].key +
+                   '&to=' + data[1].key);
+};
+
 d3.json('/incidents/summary', function(json){
     d3.select('div.boxes')
         .append('div')
@@ -62,6 +70,7 @@ d3.json('/incidents/summary', function(json){
         .call(summary())
         .selectAll('input')
         .on('change', function(value){
+            finalKind = value.key;
             plot('/incidents?finalKind=' + value.key);
         });
 });
@@ -69,6 +78,6 @@ d3.json('/incidents/summary', function(json){
 d3.json('/incidents/summary/date', function(json){
     d3.select('div.boxes div#by-date')
         .datum(json)
-        .call(byDate());
+        .call(dateChart);
 });
 
