@@ -57,6 +57,7 @@ function plot(url){
 var dateChart = byDate();
 var finalKind;
 dateChart.onSelect = function(data){
+    finalKind = finalKind || '';
     plot('/incidents?finalKind=' + finalKind +
                    '&from=' + data[0].key +
                    '&to=' + data[1].key);
