@@ -55,12 +55,14 @@ function plot(url){
 }
 
 var dateChart = byDate();
-var finalKind;
+var finalKind, from, to;
 dateChart.onSelect = function(data){
     finalKind = finalKind || '';
+    from = data[0].key;
+    to = data[1].key;
     plot('/incidents?finalKind=' + finalKind +
-                   '&from=' + data[0].key +
-                   '&to=' + data[1].key);
+                   '&from=' + from +
+                   '&to=' + to);
 };
 
 d3.json('/incidents/summary', function(json){
@@ -72,7 +74,11 @@ d3.json('/incidents/summary', function(json){
         .selectAll('input')
         .on('change', function(value){
             finalKind = value.key;
-            plot('/incidents?finalKind=' + value.key);
+            from = from || '';
+            to = to || '';
+            plot('/incidents?finalKind=' + finalKind +
+                           '&from=' + from +
+                           '&to=' + to);
         });
 });
 
