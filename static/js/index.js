@@ -59,7 +59,7 @@ var finalKind, from, to;
 dateChart.onSelect = function(data){
     finalKind = finalKind || '';
     from = data[0].key;
-    to = data[1].key;
+    to = data[1]? data[1].key : from;
     plot('/incidents?finalKind=' + finalKind +
                    '&from=' + from +
                    '&to=' + to);
