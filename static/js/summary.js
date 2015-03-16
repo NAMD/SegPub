@@ -20,6 +20,9 @@ exports.summary = function(){
         summary.append('input')
             .attr('id', slug)
             .attr('type', 'radio')
+            .property('checked', function(d, i){
+                if(i===0) return 'checked';
+            })
             .attr('name', 'finalKind');
 
         summary.append('label')
