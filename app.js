@@ -37,7 +37,7 @@ function validatePreconditions(req, res, next){
     if(!req.query.finalKind){
         res.status(412).send({error: 'Final kind missing'});
     }else{
-        next(err);
+        next();
     }
 }
 
