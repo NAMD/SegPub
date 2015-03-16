@@ -78,3 +78,41 @@ footer img{
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+#by-date svg{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+#by-date .x.axis text{
+    font-size: .5em;
+    fill: #333;
+}
+
+#by-date svg rect{
+    fill: #333;
+}
+
+#by-date svg .x.axis text.active,
+#by-date svg rect.active{
+    fill: #fff;
+}
+
+#by-date .x.axis path.domain{
+    display: none;
+}
+
+#by-date .brush rect.extent {
+    stroke: #fff;
+    fill-opacity: .5;
+    fill: #AAA;
+    shape-rendering: crispEdges;
+}
+
+#by-date .x.axis text{
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}

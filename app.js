@@ -28,11 +28,29 @@ file.pipe(parser)
 
 app.use(compression());
 
+function parseDate(dateString){
+    var split = dateString.split('/');
+    return new Date(split.reverse().join('-'));
+}
+
 app.get('/incidents', function(req, res){
     var finalKind = req.query.finalKind || 'Roubo';
+
     res.set('Content-Type', 'text/csv');
     csv.stringify(
-        incidents.filter(filter.filterByKind(finalKind)),
+        incidents.filter(filter.filterByKind(finalKind))
+                 .filter(function(incident){
+                     // TODO: Refactoring and test covering are needed.
+                     var date = parseDate(incident['Inicio Atendimento'].slice(0, 10)),
+                         show = true;
+                     if(req.query.from){
+                         show = show && date >= new Date(req.query.from);
+                     }
+                     if(req.query.to){
+                         show = show && date <= new Date(req.query.to);
+                     }
+                     return show;
+                 }),
         {delimiter: '|', header: true})
     .pipe(res);
 });
@@ -42,8 +60,8 @@ app.get('/incidents/summary', summary(incidents, function(incident){
 }));
 
 app.get('/incidents/summary/date', summary(incidents, function(incident){
-    var date = incident['Inicio Atendimento'].slice(0, 10);
-    return date;
+    var date = parseDate(incident['Inicio Atendimento'].slice(0, 10));
+    return date.toISOString().slice(0, 10);
 }));
 
 exports.app = app;
