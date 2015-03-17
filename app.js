@@ -33,8 +33,16 @@ function parseDate(dateString){
     return new Date(split.reverse().join('-'));
 }
 
-app.get('/incidents', function(req, res){
-    var finalKind = req.query.finalKind || 'Roubo';
+function validatePreconditions(req, res, next){
+    if(!req.query.finalKind){
+        res.status(412).send({error: 'Final kind missing'});
+    }else{
+        next();
+    }
+}
+
+app.get('/incidents', validatePreconditions, function(req, res){
+    var finalKind = req.query.finalKind;
 
     res.set('Content-Type', 'text/csv');
     csv.stringify(
