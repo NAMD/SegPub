@@ -92,7 +92,7 @@ exports.byDate = function(){
         brush.x(x).on("brushend", function (){
             var selectedData = data.filter(function(d){
                 return isInDay(x(date(d)));
-            });
+            }).map(function(d){ return d.key;});
             chart.onSelect(selectedData);
         });
 

@@ -7,8 +7,8 @@ var d3 = require('d3'),
 
 dateChart.onSelect = function(data){
     finalKind = finalKind || '';
-    from = data[0].key;
-    to = data[1]? data[1].key : from;
+    from = data[0];
+    to = data[1]? data[1] : from;
     map.plot(finalKind, from, to);
 };
 
