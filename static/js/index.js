@@ -1,5 +1,4 @@
-var L = require('leaflet'),
-    d3 = require('d3'),
+var d3 = require('d3'),
     summary = require('./summary').summary,
     byDate = require('./byDate').byDate,
     map = require('./map'),
