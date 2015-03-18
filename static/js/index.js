@@ -24,7 +24,7 @@ d3.json('/incidents/summary', function(json){
             from = from || '';
             to = to || '';
             map.plot(finalKind, from, to);
-        });
+        }).node().click();
 });
 
 d3.json('/incidents/summary/date', function(json){
