@@ -89,13 +89,12 @@ exports.byDate = function(){
                 return isInBrush(x(lastDay) - x(firstDay), x(firstDay));
             });
         });
-        brush.x(x).on("brushend", function (){
+        brush.on("brushend", function (){
             var selectedData = data.filter(function(d){
                 return isInDay(x(date(d)));
             }).map(function(d){ return d.key;});
             chart.onSelect(selectedData);
         });
-
 
         svg.append("g")
             .attr("class", "x brush")
