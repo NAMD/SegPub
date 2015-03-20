@@ -105,6 +105,11 @@ exports.byDate = function(){
     }
 
     chart.onSelect = function(data){ console.log(data);};
+    chart.select = function(extent){
+        brush.extent(extent);
+        brush.on("brush")();
+        brush.on("brushend")();
+    };
 
     return chart;
 };
