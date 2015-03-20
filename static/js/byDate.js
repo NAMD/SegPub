@@ -106,9 +106,9 @@ exports.byDate = function(){
 
     chart.onSelect = function(data){ console.log(data);};
     chart.select = function(extent){
-        brush.extent(extent);
-        brush.on("brush")();
-        brush.on("brushend")();
+        d3.select('g.x.brush')
+            .call(brush.extent(extent))
+            .call(brush.event);
     };
 
     return chart;
