@@ -11,9 +11,7 @@ function day(d){
     };
 }
 function plusOneDay(date){
-    date = new Date(date);
-    date.setDate(date.getDate() + 1);
-    return date;
+    return day(date.getDate() + 1)(date);
 }
 function isIn(range, width, value){
     return range[0] <= (value + width) && value <= range[1];
