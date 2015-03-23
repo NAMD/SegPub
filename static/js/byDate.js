@@ -99,7 +99,7 @@ exports.byDate = function(){
             .call(brush)
             .selectAll("rect")
             .attr("y", y.range()[1])
-            .attr("height", y.range()[0]);
+            .attr("height", y.range()[0] - y.range()[1] - 1);
     }
 
     chart.onSelect = function(data){ console.log(data);};
