@@ -1,90 +1,39 @@
-var L = require('leaflet'),
-    d3 = require('d3'),
+var d3 = require('d3'),
     summary = require('./summary').summary,
     byDate = require('./byDate').byDate,
-    mapa = L.map('mapaleaf', {
-        attributionControl: false,
-        zoomControl: false
-    }).setView([-22.92,-43.22], 10),
-    options = {
-        fieldSeparator: '|',
-        firstLineTitles: true,
-        onEachFeature: function (feature, layer) {
-            var properties = feature.properties,
-                popup = 'Batalhão responsável: '.bold() + properties.batalho + '<br />' +
-                        'Despacho: '.bold() + properties.despacho + '<br />' +
-                        'Conclusão: '.bold() + properties.concluso + '<br />' +
-                         '<br />' +
-                         properties.observaes;
-            layer.bindPopup(popup);
-        },
-        pointToLayer: function (feature, latlng) {
-            return L.marker(latlng, {
-                icon:L.icon({
-                    iconUrl: '/images/iconmonstr-warning-2-icon.svg',
-                    iconSize: [30,30],
-                })
-            });
-        }
-    };
+    map = require('./map'),
+    dateChart = byDate(),
+    finalKind, from, to;
 
-require('leaflet-geocsv');
-require('leaflet.markercluster');
-
-L.tileLayer('http://b.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(mapa);
-var cluster = new L.MarkerClusterGroup();
-mapa.addLayer(cluster);
-
-function plot(url){
-    var loading = document.getElementById('loading'),
-        ocorrencias = L.geoCsv(null, options);
-
-    loading.style.display = 'flex';
-
-    d3.text(url).get().on('load', function(csv) {
-        ocorrencias.addData(csv);
-        cluster.clearLayers();
-        cluster.addLayer(ocorrencias);
-        mapa.fitBounds(cluster.getBounds());
-        loading.style.display = 'none';
-    })
-    .on('error', function(){
-        alert('Não foi possível carregar os dados');
-        loading.style.display = 'none';
-    });
-}
-
-var dateChart = byDate();
-var finalKind, from, to;
 dateChart.onSelect = function(data){
-    finalKind = finalKind || '';
-    from = data[0].key;
-    to = data[1]? data[1].key : from;
-    plot('/incidents?finalKind=' + finalKind +
-                   '&from=' + from +
-                   '&to=' + to);
+    from = data[0];
+    to = data[1]? data[1] : from;
+    if(finalKind){
+        map.plot(finalKind, from, to);
+    }
 };
-
-d3.json('/incidents/summary', function(json){
-    d3.select('div.boxes')
-        .append('div')
-        .attr('id', 'summary')
-        .datum(json)
-        .call(summary())
-        .selectAll('input')
-        .on('change', function(value){
-            finalKind = value.key;
-            from = from || '';
-            to = to || '';
-            plot('/incidents?finalKind=' + finalKind +
-                           '&from=' + from +
-                           '&to=' + to);
-        });
-});
 
 d3.json('/incidents/summary/date', function(json){
     d3.select('div.boxes div#by-date')
         .datum(json)
         .call(dateChart);
+
+    dateChart.select([295, 377]);
+
+    d3.json('/incidents/summary', function(json){
+        d3.select('div.boxes')
+            .append('div')
+            .attr('id', 'summary')
+            .datum(json)
+            .call(summary())
+            .selectAll('input')
+            .on('change', function(value){
+                finalKind = value.key;
+                from = from || '';
+                to = to || '';
+                map.plot(finalKind, from, to);
+            }).node().click();
+    });
+
 });
 

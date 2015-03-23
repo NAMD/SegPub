@@ -11,9 +11,7 @@ function day(d){
     };
 }
 function plusOneDay(date){
-    date = new Date(date);
-    date.setDate(date.getDate() + 1);
-    return date;
+    return day(date.getDate() + 1)(date);
 }
 function isIn(range, width, value){
     return range[0] <= (value + width) && value <= range[1];
@@ -89,23 +87,27 @@ exports.byDate = function(){
                 return isInBrush(x(lastDay) - x(firstDay), x(firstDay));
             });
         });
-        brush.x(x).on("brushend", function (){
+        brush.on("brushend", function (){
             var selectedData = data.filter(function(d){
                 return isInDay(x(date(d)));
-            });
+            }).map(function(d){ return d.key;});
             chart.onSelect(selectedData);
         });
-
 
         svg.append("g")
             .attr("class", "x brush")
             .call(brush)
             .selectAll("rect")
             .attr("y", y.range()[1])
-            .attr("height", y.range()[0]);
+            .attr("height", y.range()[0] - y.range()[1] - 1);
     }
 
     chart.onSelect = function(data){ console.log(data);};
+    chart.select = function(extent){
+        d3.select('g.x.brush')
+            .call(brush.extent(extent))
+            .call(brush.event);
+    };
 
     return chart;
 };

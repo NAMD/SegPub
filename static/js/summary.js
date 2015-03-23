@@ -36,5 +36,5 @@ exports.summary = function(){
             .text(function(d){ return pt_BR.numberFormat('n')(d.value);});
         }
 
-        return chart;
+    return chart;
 };
