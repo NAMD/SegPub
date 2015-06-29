@@ -16,7 +16,7 @@
     "type": "git",
     "url": "git://github.com/israelst/SegPub.git"
   },
-  "author": "",
+  "author": "Israel Teixeira <israelst@gmail.com>",
   "license": "GPL",
   "bugs": {
     "url": "https://github.com/israelst/SegPub/issues"
