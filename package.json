@@ -6,6 +6,7 @@
   "private": true,
   "scripts": {
     "clean": "rm -vf static/data/segpub.csv*",
+    "dev": "grunt watch",
     "get-data": "node getData.js",
     "postinstall": "grunt copy:styles",
     "prestart": "grunt browserify",
