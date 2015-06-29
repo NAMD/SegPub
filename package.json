@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "description": "",
   "main": "server.js",
+  "private": true,
   "scripts": {
     "clean": "rm -vf static/data/segpub.csv*",
     "get-data": "node getData.js",
