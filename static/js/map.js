@@ -29,7 +29,10 @@ var L = require('leaflet'),
 require('leaflet-geocsv');
 require('leaflet.markercluster');
 
-L.tileLayer('http://b.tiles.wmflabs.org/bw-mapnik/{z}/{x}/{y}.png', { maxZoom: 18 }).addTo(mapa);
+// https://cartodb.com/basemaps
+var tileUrlPattern = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
+L.tileLayer(tileUrlPattern, { maxZoom: 18 }).addTo(mapa);
+
 var cluster = new L.MarkerClusterGroup();
 mapa.addLayer(cluster);
 
