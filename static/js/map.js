@@ -2,7 +2,7 @@ var L = require('leaflet'),
     mapa = L.map('mapaleaf', {
         attributionControl: false,
         zoomControl: false
-    }).setView([-22.92,-43.22], 10),
+    }),
     options = {
         fieldSeparator: '|',
         firstLineTitles: true,
@@ -25,6 +25,12 @@ var L = require('leaflet'),
         }
     };
 
+function setInitialView(mapa){
+    var initialView = [[-22.92, -43.22], 10];
+    mapa.setView.apply(mapa, initialView);
+}
+
+setInitialView(mapa);
 
 require('leaflet-geocsv');
 require('leaflet.markercluster');
@@ -40,7 +46,7 @@ exports.plot = function (finalKind, from, to){
     var url = '/incidents?finalKind=' + finalKind +
                    '&from=' + from +
                    '&to=' + to,
-    loading = document.getElementById('loading'),
+        loading = document.getElementById('loading'),
         ocorrencias = L.geoCsv(null, options);
 
     loading.style.display = 'flex';
@@ -49,7 +55,12 @@ exports.plot = function (finalKind, from, to){
         ocorrencias.addData(csv);
         cluster.clearLayers();
         cluster.addLayer(ocorrencias);
-        mapa.fitBounds(cluster.getBounds());
+        var bounds = cluster.getBounds();
+        if(bounds.isValid()){
+            mapa.fitBounds(bounds);
+        }else{
+            setInitialView(mapa);
+        }
         loading.style.display = 'none';
     })
     .on('error', function(){
