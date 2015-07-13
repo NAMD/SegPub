@@ -49,11 +49,11 @@ exports.plot = function (finalKind, from, to){
         loading = document.getElementById('loading'),
         ocorrencias = L.geoCsv(null, options);
 
+    cluster.clearLayers();
     loading.style.display = 'flex';
 
     d3.text(url).get().on('load', function(csv) {
         ocorrencias.addData(csv);
-        cluster.clearLayers();
         cluster.addLayer(ocorrencias);
         var bounds = cluster.getBounds();
         if(bounds.isValid()){
