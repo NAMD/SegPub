@@ -28,6 +28,9 @@ var L = require('leaflet'),
         }
     };
 
+require('leaflet-geocsv');
+require('leaflet.markercluster');
+
 function setInitialView(mapa){
     var initialView = [[-22.92, -43.22], 10];
     mapa.setView.apply(mapa, initialView);
@@ -35,8 +38,6 @@ function setInitialView(mapa){
 
 setInitialView(mapa);
 
-require('leaflet-geocsv');
-require('leaflet.markercluster');
 
 L.tileLayer(tileUrlPattern, { maxZoom: 18 }).addTo(mapa);
 
