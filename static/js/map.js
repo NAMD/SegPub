@@ -19,7 +19,7 @@ var L = require('leaflet'),
             return L.marker(latlng, {
                 icon:L.icon({
                     iconUrl: '/images/iconmonstr-warning-2-icon.svg',
-                    iconSize: [30,30],
+                    iconSize: [30, 30],
                 })
             });
         }
