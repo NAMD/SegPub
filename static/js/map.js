@@ -1,4 +1,7 @@
 var L = require('leaflet'),
+    // https://cartodb.com/basemaps
+    tileUrlPattern = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
+    cluster = new L.MarkerClusterGroup(),
     mapa = L.map('mapaleaf', {
         attributionControl: false,
         zoomControl: false
@@ -35,11 +38,8 @@ setInitialView(mapa);
 require('leaflet-geocsv');
 require('leaflet.markercluster');
 
-// https://cartodb.com/basemaps
-var tileUrlPattern = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png';
 L.tileLayer(tileUrlPattern, { maxZoom: 18 }).addTo(mapa);
 
-var cluster = new L.MarkerClusterGroup();
 mapa.addLayer(cluster);
 
 exports.plot = function (finalKind, from, to){
