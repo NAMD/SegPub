@@ -34,10 +34,7 @@ require('leaflet.markercluster');
 function setInitialView(mapa){
     var initialView = [[-22.92, -43.22], 10];
     mapa.setView.apply(mapa, initialView);
-}
-
-setInitialView(mapa);
-
+}(mapa);
 
 L.tileLayer(tileUrlPattern, { maxZoom: 18 }).addTo(mapa);
 
