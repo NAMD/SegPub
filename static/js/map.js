@@ -1,7 +1,7 @@
 var L = require('leaflet'),
     // https://cartodb.com/basemaps
     tileUrlPattern = 'http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png',
-    cluster = new L.MarkerClusterGroup(),
+    cluster = require('leaflet.markercluster') && new L.MarkerClusterGroup(),
     mapa = L.map('mapaleaf', {
         attributionControl: false,
         zoomControl: false
@@ -29,7 +29,6 @@ var L = require('leaflet'),
     };
 
 require('leaflet-geocsv');
-require('leaflet.markercluster');
 
 function setInitialView(mapa){
     var initialView = [[-22.92, -43.22], 10];
