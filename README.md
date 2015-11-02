@@ -5,7 +5,7 @@ SegPub is a webapp that aims to visualize public security incidents, answering q
 3. In which slice of the day there was more threats?
 
 # How does it works?
-For this, the idea is to build three interactive histograms that cross filter each other and the map:
+The idea is to build these three interactive histograms that cross filter each other and the map:
 
 * Distribution of incidents per category.
 * Distribution of incidents through the current month.
