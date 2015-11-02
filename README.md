@@ -1,8 +1,8 @@
 # What it it?
 SegPub is a webapp that aims to visualize public security incidents, answering questions such as:
-1. Where there were more injuries during the last week?
-2. What have been the most frequent incident this month?
-3. In which slice of the day there was more threats?
+ 1. Where there were more injuries during the last week?
+ 2. What have been the most frequent incident this month?
+ 3. In which slice of the day there was more threats?
 
 # How does it works?
 The idea is to build these three interactive histograms that cross filter each other and the map:
